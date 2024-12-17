@@ -14,7 +14,7 @@ namespace ProjectRestaurant.DataAccess.Concrete.EntityFramework.Context
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Server=HAYRI;initial Catalog=RestaurantDb;integrated Security=true;TrustServerCertificate=True");
+                optionsBuilder.UseSqlServer("Server=AHLTEK-EMREKAYA;initial Catalog=RestaurantDb;integrated Security=true;TrustServerCertificate=True");
             }
             base.OnConfiguring(optionsBuilder);
         }

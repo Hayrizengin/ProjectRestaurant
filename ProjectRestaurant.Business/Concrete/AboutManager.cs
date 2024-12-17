@@ -1,6 +1,8 @@
-﻿using ProjectRestaurant.Business.Abstract;
+﻿using AutoMapper;
+using ProjectRestaurant.Business.Abstract;
 using ProjectRestaurant.DataAccess.Abstract.DataManagement;
 using ProjectRestaurant.Entity.DTO.AboutDTO;
+using ProjectRestaurant.Entity.Poco;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,36 +13,56 @@ namespace ProjectRestaurant.Business.Concrete
 {
     public class AboutManager : IGenericService<AboutDTORequest, AboutDTOResponse>
     {
-        private readonly IUnitOfWork _uow;
+        private readonly Lazy<IUnitOfWork> _uow;
+        private readonly IMapper _mapper;
 
-        public AboutManager(IUnitOfWork uow)
+        public AboutManager(Lazy<IUnitOfWork> uow, IMapper mapper)
         {
             _uow = uow;
+            _mapper = mapper;
         }
 
-        public Task<AboutDTOResponse> AddAsync(AboutDTORequest entity)
+        public async Task<AboutDTOResponse> AddAsync(AboutDTORequest entity)
         {
-            throw new NotImplementedException();
+            About about = _mapper.Map<About>(entity);
+            await _uow.Value.AboutRepository.AddAsync(about);
+            await _uow.Value.SaveChangeAsync();
+
+            AboutDTOResponse aboutDTOResponse = _mapper.Map<AboutDTOResponse>(about);
+            return aboutDTOResponse;
         }
 
-        public Task DeleteAsync(AboutDTORequest entity)
+        public async Task DeleteAsync(AboutDTORequest entity)
         {
-            throw new NotImplementedException();
+            About about = _mapper.Map<About>(entity);
+            await _uow.Value.AboutRepository.RemoveAsync(about);
+            await _uow.Value.SaveChangeAsync();
         }
 
-        public Task<List<AboutDTOResponse>> GetAllAsync(AboutDTORequest entity)
+        public async Task<List<AboutDTOResponse>> GetAllAsync(AboutDTORequest entity)
         {
-            throw new NotImplementedException();
+            var abouts = await _uow.Value.AboutRepository.GetAllAsync(x=>true);
+            List<AboutDTOResponse> aboutDTOResponses = new();
+            foreach (var about in abouts)
+            {
+                aboutDTOResponses.Add(_mapper.Map<AboutDTOResponse>(about));
+            }
+            return aboutDTOResponses;
         }
 
-        public Task<AboutDTOResponse> GetAsync(AboutDTORequest entity)
+        public async Task<AboutDTOResponse> GetAsync(AboutDTORequest entity)
         {
-            throw new NotImplementedException();
+            var about = await _uow.Value.AboutRepository.GetAsync(x=>x.Id == entity.Id || x.Guid == entity.Guid);
+            var aboutResponse = _mapper.Map<AboutDTOResponse>(about);
+            return aboutResponse;
         }
 
-        public Task UpdateAsync(AboutDTORequest entity)
+        public async Task UpdateAsync(AboutDTORequest entity)
         {
-            throw new NotImplementedException();
+            var about = await _uow.Value.AboutRepository.GetAsync(x=>x.Id == entity.Id || x.Guid == entity.Guid);
+            about = _mapper.Map(entity,about);
+            await _uow.Value.AboutRepository.UpdateAsync(about);
+            await _uow.Value.SaveChangeAsync();
         }
     }
 }

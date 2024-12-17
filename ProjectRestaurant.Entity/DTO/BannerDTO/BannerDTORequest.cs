@@ -8,6 +8,8 @@ namespace ProjectRestaurant.Entity.DTO.BannerDTO
 {
     public class BannerDTORequest
     {
+        public int Id { get; set; }
+        public Guid Guid { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }
         public string ImageUrl { get; set; }

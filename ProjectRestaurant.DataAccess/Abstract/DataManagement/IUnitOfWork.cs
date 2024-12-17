@@ -16,6 +16,7 @@ namespace ProjectRestaurant.DataAccess.Abstract.DataManagement
         IMessageRepository MessageRepository { get; }
         ISocialMediaRepository SocialMediaRepository { get; }
         ISpecialRecipeRepository SpecialRecipeRepository { get; }
+        IUserRepository UserRepository { get; }
         Task<int> SaveChangeAsync();
 
     }

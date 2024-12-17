@@ -13,8 +13,8 @@ namespace ProjectRestaurant.DataAccess.Mapping.BaseMap
     {
         public virtual void Configure(EntityTypeBuilder<T> builder)
         {
-            builder.HasKey(q => q.id);
-            builder.Property(q => q.id).ValueGeneratedOnAdd();
+            builder.HasKey(q => q.Id);
+            builder.Property(q => q.Id).ValueGeneratedOnAdd();
             builder.Property(q => q.Guid).ValueGeneratedOnAdd();
         }
     }

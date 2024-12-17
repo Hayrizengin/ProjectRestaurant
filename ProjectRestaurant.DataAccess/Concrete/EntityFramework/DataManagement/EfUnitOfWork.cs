@@ -29,6 +29,7 @@ namespace ProjectRestaurant.DataAccess.Concrete.EntityFramework.DataManagement
             MessageRepository = new EfMessageRepository(_restaurantContext);
             SocialMediaRepository = new EfSocialMediaRepository(_restaurantContext);
             SpecialRecipeRepository = new EfSpecialRecipeRepository(_restaurantContext);
+            UserRepository = new EfUserRepository(_restaurantContext);
         }
 
         public IAboutRepository AboutRepository { get; }
@@ -39,6 +40,7 @@ namespace ProjectRestaurant.DataAccess.Concrete.EntityFramework.DataManagement
         public IMessageRepository MessageRepository { get; }
         public ISocialMediaRepository SocialMediaRepository { get; }
         public ISpecialRecipeRepository SpecialRecipeRepository { get; }
+        public IUserRepository UserRepository { get; }
 
         public async Task<int> SaveChangeAsync()
         {
