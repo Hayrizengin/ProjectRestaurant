@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ProjectRestaurant.DataAccess.Mapping;
+using ProjectRestaurant.Entity.Poco;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,24 @@ namespace ProjectRestaurant.DataAccess.Concrete.EntityFramework.Context
 {
     public class ProjectRestaurantContext : DbContext
     {
+        public ProjectRestaurantContext()
+        {
+
+        }
+        public ProjectRestaurantContext(DbContextOptions options) : base(options)
+        {
+
+        }
+
+        public DbSet<User> User { get; set; }
+        public DbSet<Banner> Banner { get; set; }
+        public DbSet<Contact> Contact { get; set; }
+        public DbSet<Food> Food { get; set; }
+        public DbSet<FoodCategory> FoodCategory { get; set; }
+        public DbSet<Message> Message { get; set; }
+        public DbSet<SocialMedia> SocialMedia { get; set; }
+        public DbSet<SpecialRecipe> SpecialRecipe { get; set; }
+        public DbSet<About> About { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
