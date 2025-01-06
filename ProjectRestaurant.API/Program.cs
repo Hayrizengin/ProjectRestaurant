@@ -1,6 +1,11 @@
+using ProjectRestaurant.Business.Abstract;
+using ProjectRestaurant.Business.Concrete;
 using ProjectRestaurant.DataAccess.Abstract.DataManagement;
 using ProjectRestaurant.DataAccess.Concrete.EntityFramework.Context;
 using ProjectRestaurant.DataAccess.Concrete.EntityFramework.DataManagement;
+using ProjectRestaurant.Tools.Security;
+using ProjectRestaurant.Tools.Validation;
+using FluentValidation.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +18,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddDbContext<ProjectRestaurantContext>();
 builder.Services.AddScoped<IUnitOfWork, EfUnitOfWork>();
+builder.Services.AddScoped<IUserService, UserManager>();
+builder.Services.AddScoped<IPasswordHasher, BCryptPasswordHasher>();
+builder.Services.AddScoped<ITokenService, TokenManager>();
+builder.Services.AddScoped<IGenericValidator, FluentValidator>();
+
+//FluentValidation
+builder.Services.AddFluentValidationAutoValidation();
 
 var app = builder.Build();
 

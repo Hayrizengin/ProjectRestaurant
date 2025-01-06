@@ -9,9 +9,9 @@ using System.Threading.Tasks;
 
 namespace ProjectRestaurant.Business.DTOMapper.AboutDTOMapper
 {
-    public class AboutDTOMapper:Profile
+    public class AboutDTOMap:Profile
     {
-        public AboutDTOMapper()
+        public AboutDTOMap()
         {
             //Request
             CreateMap<AboutDTORequest, About>();

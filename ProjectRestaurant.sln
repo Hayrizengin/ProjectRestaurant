@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.12.35506.116 d17.12
+VisualStudioVersion = 17.12.35506.116
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectRestaurant.API", "ProjectRestaurant.API\ProjectRestaurant.API.csproj", "{6EDCF1CB-FA40-4813-90B0-32968415E58C}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectRestaurant.DataAccess", "ProjectRestaurant.DataAccess\ProjectRestaurant.DataAccess.csproj", "{3EFDF310-2DB4-4BB8-B368-91C22E29F6FF}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectRestaurant.Entity", "ProjectRestaurant.Entity\ProjectRestaurant.Entity.csproj", "{7159945C-AD45-4819-AFCC-CA8A26115D99}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectRestaurant.Tools", "ProjectRestaurant.Tools\ProjectRestaurant.Tools.csproj", "{ED03D30F-4A05-4F5E-9C41-BB1ABF378E4C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{7159945C-AD45-4819-AFCC-CA8A26115D99}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7159945C-AD45-4819-AFCC-CA8A26115D99}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7159945C-AD45-4819-AFCC-CA8A26115D99}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ED03D30F-4A05-4F5E-9C41-BB1ABF378E4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ED03D30F-4A05-4F5E-9C41-BB1ABF378E4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ED03D30F-4A05-4F5E-9C41-BB1ABF378E4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ED03D30F-4A05-4F5E-9C41-BB1ABF378E4C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

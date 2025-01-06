@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace ProjectRestaurant.Business.Concrete
 {
-    public class AboutManager : IGenericService<AboutDTORequest, AboutDTOResponse>
+    public class AboutManager : IAboutService
     {
         private readonly Lazy<IUnitOfWork> _uow;
         private readonly IMapper _mapper;

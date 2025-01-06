@@ -8,10 +8,12 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="FluentValidation" Version="11.11.0" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\ProjectRestaurant.DataAccess\ProjectRestaurant.DataAccess.csproj" />
+    <ProjectReference Include="..\ProjectRestaurant.Tools\ProjectRestaurant.Tools.csproj" />
   </ItemGroup>
 
 </Project>

@@ -9,10 +9,10 @@ namespace ProjectRestaurant.Business.Abstract
 {
     public interface IGenericService<TRequest,TResponse>
     {
-        public Task<TResponse> AddAsync(TRequest entity);
-        public Task UpdateAsync(TRequest entity);
-        public Task DeleteAsync(TRequest entity);
-        public Task<TResponse> GetAsync(TRequest entity);
-        public Task<List<TResponse>> GetAllAsync(TRequest entity);
+        Task<TResponse> AddAsync(TRequest entity);
+        Task UpdateAsync(TRequest entity);
+        Task DeleteAsync(TRequest entity);
+        Task<TResponse> GetAsync(TRequest entity);
+        Task<List<TResponse>> GetAllAsync(TRequest entity);
     }
 }

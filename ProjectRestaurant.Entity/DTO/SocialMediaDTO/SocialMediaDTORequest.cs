@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectRestaurant.Entity.DTO.SocialMedia
+namespace ProjectRestaurant.Entity.DTO.SocialMediaDTO
 {
     public class SocialMediaDTORequest
     {
