@@ -3,6 +3,7 @@ using ProjectRestaurant.Business.Abstract;
 using ProjectRestaurant.DataAccess.Abstract.DataManagement;
 using ProjectRestaurant.Entity.DTO.ContactDTO;
 using ProjectRestaurant.Entity.Poco;
+using ProjectRestaurant.Tools.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,58 +12,31 @@ using System.Threading.Tasks;
 
 namespace ProjectRestaurant.Business.Concrete
 {
-    public class ContactManager:IContactService
+    public class ContactManager : IContactService
     {
-        private readonly Lazy<IUnitOfWork> _uow;
-        private readonly IMapper _mapper;
-
-        public ContactManager(Lazy<IUnitOfWork> uow, IMapper mapper)
+        public Task<ApiResponse<ContactDTOResponse>> AddAsync(ContactDTORequest entity)
         {
-            _uow = uow;
-            _mapper = mapper;
+            throw new NotImplementedException();
         }
 
-        public async Task<ContactDTOResponse> AddAsync(ContactDTORequest entity)
+        public Task<ApiResponse<bool>> DeleteAsync(int id)
         {
-            Contact Contact = _mapper.Map<Contact>(entity);
-            await _uow.Value.ContactRepository.AddAsync(Contact);
-            await _uow.Value.SaveChangeAsync();
-
-            ContactDTOResponse ContactDTOResponse = _mapper.Map<ContactDTOResponse>(Contact);
-            return ContactDTOResponse;
+            throw new NotImplementedException();
         }
 
-        public async Task DeleteAsync(ContactDTORequest entity)
+        public Task<ApiResponse<IEnumerable<ContactDTOResponse>>> GetAllAsync(ContactDTORequest entity)
         {
-            Contact Contact = _mapper.Map<Contact>(entity);
-            await _uow.Value.ContactRepository.RemoveAsync(Contact);
-            await _uow.Value.SaveChangeAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<List<ContactDTOResponse>> GetAllAsync(ContactDTORequest entity)
+        public Task<ApiResponse<ContactDTOResponse>> GetAsync(int id)
         {
-            var Contacts = await _uow.Value.ContactRepository.GetAllAsync(x => true);
-            List<ContactDTOResponse> ContactDTOResponses = new();
-            foreach (var Contact in Contacts)
-            {
-                ContactDTOResponses.Add(_mapper.Map<ContactDTOResponse>(Contact));
-            }
-            return ContactDTOResponses;
+            throw new NotImplementedException();
         }
 
-        public async Task<ContactDTOResponse> GetAsync(ContactDTORequest entity)
+        public Task<ApiResponse<bool>> UpdateAsync(ContactDTORequest entity)
         {
-            var Contact = await _uow.Value.ContactRepository.GetAsync(x => x.Id == entity.Id || x.Guid == entity.Guid);
-            var ContactResponse = _mapper.Map<ContactDTOResponse>(Contact);
-            return ContactResponse;
-        }
-
-        public async Task UpdateAsync(ContactDTORequest entity)
-        {
-            var Contact = await _uow.Value.ContactRepository.GetAsync(x => x.Id == entity.Id || x.Guid == entity.Guid);
-            Contact = _mapper.Map(entity, Contact);
-            await _uow.Value.ContactRepository.UpdateAsync(Contact);
-            await _uow.Value.SaveChangeAsync();
+            throw new NotImplementedException();
         }
     }
 }

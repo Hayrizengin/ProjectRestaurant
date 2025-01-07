@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.ChangeTracking;
 using ProjectRestaurant.DataAccess.Abstract;
 using ProjectRestaurant.DataAccess.Abstract.DataManagement;
@@ -46,7 +47,7 @@ namespace ProjectRestaurant.DataAccess.Concrete.EntityFramework.DataManagement
         {
             foreach (EntityEntry<AuditableEntity> item in _restaurantContext.ChangeTracker.Entries<AuditableEntity>())
             {
-                if (item.State == Microsoft.EntityFrameworkCore.EntityState.Added)
+                if (item.State == EntityState.Added)
                 {
                     item.Entity.AddedTime = DateTime.Now;
                     item.Entity.UpdatedTime = DateTime.Now;
@@ -61,7 +62,7 @@ namespace ProjectRestaurant.DataAccess.Concrete.EntityFramework.DataManagement
                     }
                     item.Entity.IsDeleted = false;
                 }
-                else if (item.State == Microsoft.EntityFrameworkCore.EntityState.Modified)
+                else if (item.State == EntityState.Modified)
                 {
                     item.Entity.UpdatedTime = DateTime.Now;
                     item.Entity.UpdatedUser = 1;

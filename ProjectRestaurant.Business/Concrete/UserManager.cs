@@ -19,109 +19,41 @@ using System.Threading.Tasks;
 
 namespace ProjectRestaurant.Business.Concrete
 {
-    public class UserManager:IUserService
+    public class UserManager : IUserService
     {
-        private readonly Lazy<IUnitOfWork> _uow;
-        private readonly IMapper _mapper;
-        private readonly ITokenService _tokenService;
-        private readonly IGenericValidator _validator;
-        private readonly IPasswordHasher _passwordHasher;
-
-        public UserManager(Lazy<IUnitOfWork> uow, IMapper mapper, ITokenService tokenService, IGenericValidator validator, IPasswordHasher passwordHasher)
+        public Task<ApiResponse<UserDTOResponse>> AddAsync(UserDTORequest entity)
         {
-            _uow = uow;
-            _mapper = mapper;
-            _tokenService = tokenService;
-            _validator = validator;
-            _passwordHasher = passwordHasher;
+            throw new NotImplementedException();
         }
 
-        public async Task<UserDTOResponse> AddAsync(UserDTORequest entity)
+        public Task<ApiResponse<bool>> DeleteAsync(int id)
         {
-            await _validator.ValidateAsync(entity,typeof(UserRegisterValidator));
-            var hashedPassword = _passwordHasher.HashPassword(entity.Password);
-            User User = _mapper.Map<User>(entity);
-            User.Password = hashedPassword;
-            await _uow.Value.UserRepository.AddAsync(User);
-            await _uow.Value.SaveChangeAsync();
-
-            UserDTOResponse UserDTOResponse = _mapper.Map<UserDTOResponse>(User);
-            return UserDTOResponse;
+            throw new NotImplementedException();
         }
 
-        public async Task DeleteAsync(UserDTORequest entity)
+        public Task<ApiResponse<IEnumerable<UserDTOResponse>>> GetAllAsync(UserDTORequest entity)
         {
-            var user = await _uow.Value.UserRepository.GetAsync(x => x.Id == entity.Id || x.Guid == entity.Guid);
-            user.IsDeleted = true;
-            user.IsActive = false;
-
-            await _uow.Value.UserRepository.UpdateAsync(user);
-            await _uow.Value.SaveChangeAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<List<UserDTOResponse>> GetAllAsync(UserDTORequest entity)
+        public Task<ApiResponse<UserDTOResponse>> GetAsync(int id)
         {
-            var Users = await _uow.Value.UserRepository.GetAllAsync(x => true);
-            List<UserDTOResponse> UserDTOResponses = new();
-            foreach (var User in Users)
-            {
-                UserDTOResponses.Add(_mapper.Map<UserDTOResponse>(User));
-            }
-            return UserDTOResponses;
+            throw new NotImplementedException();
         }
 
-        public async Task<UserDTOResponse> GetAsync(UserDTORequest entity)
+        public Task<ApiResponse<UserDTOResponse>> GetUserByEMailAsync(string eMailAddress)
         {
-            var User = await _uow.Value.UserRepository.GetAsync(x => x.Id == entity.Id || x.Guid == entity.Guid);
-            var UserResponse = _mapper.Map<UserDTOResponse>(User);
-            return UserResponse;
-        }
-        public async Task UpdateAsync(UserDTORequest entity)
-        {
-            await _validator.ValidateAsync(entity, typeof(UserUpdateValidator));
-
-            var User = await _uow.Value.UserRepository.GetAsync(x => x.Id == entity.Id || x.Guid == entity.Guid);
-            User = _mapper.Map(entity, User);
-            await _uow.Value.UserRepository.UpdateAsync(User);
-            await _uow.Value.SaveChangeAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<ApiResponse<UserDTOResponse>> GetUserByEMailAsync(string eMailAddress)
+        public Task<ApiResponse<LoginDTOResponse>> LoginAsync(LoginDTORequest loginRequestDTO)
         {
-            var user = await _uow.Value.UserRepository.GetAsync(q => q.Email.ToLower() == eMailAddress.ToLower());
-
-            if (user == null)
-            {
-                var error = new ErrorResult(new List<string>() { "Kullanıcı Bulunamadı" });
-                return ApiResponse<UserDTOResponse>.FailureResult(error, HttpStatusCode.NotFound);
-            }
-
-            return ApiResponse<UserDTOResponse>.SuccessResult(_mapper.Map<UserDTOResponse>(user));
+            throw new NotImplementedException();
         }
 
-        public async Task<ApiResponse<LoginDTOResponse>> LoginAsync(LoginDTORequest loginRequestDTO)
+        public Task<ApiResponse<bool>> UpdateAsync(UserDTORequest entity)
         {
-            await _validator.ValidateAsync(loginRequestDTO, typeof(LoginValidator));
-            var user = await _uow.Value.UserRepository.GetAsync(x => x.Email == loginRequestDTO.Email);
-
-            if (user == null || !_passwordHasher.VerifyPassword(user.Password, loginRequestDTO.Password))
-            {
-                throw new InvalidUserCredentialsException();
-            }
-            else
-            {
-                var claims = new List<Claim>
-                {
-                    new Claim("UserGuid", user.Guid.ToString()),
-                    new Claim("Email", user.Email)
-                };
-                var token = _tokenService.GenerateToken(claims);
-                var loginResponseDTO = _mapper.Map<LoginDTOResponse>(user);
-                loginResponseDTO.Token = token;
-                return ApiResponse<LoginDTOResponse>.SuccessResult(loginResponseDTO);
-            }
+            throw new NotImplementedException();
         }
-
-
     }
 }

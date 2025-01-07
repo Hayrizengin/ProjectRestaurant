@@ -11,10 +11,13 @@ namespace ProjectRestaurant.DataAccess.Abstract.DataManagement
 {
     public interface IRepository<T> where T : AuditableEntity
     {
-        Task<T> GetAsync(Expression<Func<T, bool>> Filter, params string[] IncludeProperties); /* category.where(q=>q.id=5) */
-        Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> Filter = null, params string[] IncludeProperties);
-        Task<EntityEntry<T>> AddAsync(T Entity);
-        Task UpdateAsync(T Entity);
-        Task RemoveAsync(T Entity);
+        Task<T?> GetAsync(Expression<Func<T, bool>> filter, params string[] includeProperties);
+        Task<T> GetByIdAsync(int ID);
+        Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null, params string[] includeProperties);
+
+        Task<IQueryable<T>> GetAllAsyncAsNoTracking(Expression<Func<T, bool>> filter = null, params string[] includeProperties);
+        ValueTask AddAsync(T entity);/*Insert Edilen Kaydı Geri Döndürmek İçin "void" yapmadık.*/
+        void Update(T entity);
+        void Remove(T entity);
     }
 }

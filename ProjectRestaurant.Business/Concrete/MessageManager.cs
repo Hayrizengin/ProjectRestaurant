@@ -3,6 +3,7 @@ using ProjectRestaurant.Business.Abstract;
 using ProjectRestaurant.DataAccess.Abstract.DataManagement;
 using ProjectRestaurant.Entity.DTO.MessageDTO;
 using ProjectRestaurant.Entity.Poco;
+using ProjectRestaurant.Tools.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,58 +12,31 @@ using System.Threading.Tasks;
 
 namespace ProjectRestaurant.Business.Concrete
 {
-    public class MessageManager:IMessageService
+    public class MessageManager : IMessageService
     {
-        private readonly Lazy<IUnitOfWork> _uow;
-        private readonly IMapper _mapper;
-
-        public MessageManager(Lazy<IUnitOfWork> uow, IMapper mapper)
+        public Task<ApiResponse<MessageDTOResponse>> AddAsync(MessageDTORequest entity)
         {
-            _uow = uow;
-            _mapper = mapper;
+            throw new NotImplementedException();
         }
 
-        public async Task<MessageDTOResponse> AddAsync(MessageDTORequest entity)
+        public Task<ApiResponse<bool>> DeleteAsync(int id)
         {
-            Message Message = _mapper.Map<Message>(entity);
-            await _uow.Value.MessageRepository.AddAsync(Message);
-            await _uow.Value.SaveChangeAsync();
-
-            MessageDTOResponse MessageDTOResponse = _mapper.Map<MessageDTOResponse>(Message);
-            return MessageDTOResponse;
+            throw new NotImplementedException();
         }
 
-        public async Task DeleteAsync(MessageDTORequest entity)
+        public Task<ApiResponse<IEnumerable<MessageDTOResponse>>> GetAllAsync(MessageDTORequest entity)
         {
-            Message Message = _mapper.Map<Message>(entity);
-            await _uow.Value.MessageRepository.RemoveAsync(Message);
-            await _uow.Value.SaveChangeAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<List<MessageDTOResponse>> GetAllAsync(MessageDTORequest entity)
+        public Task<ApiResponse<MessageDTOResponse>> GetAsync(int id)
         {
-            var Messages = await _uow.Value.MessageRepository.GetAllAsync(x => true);
-            List<MessageDTOResponse> MessageDTOResponses = new();
-            foreach (var Message in Messages)
-            {
-                MessageDTOResponses.Add(_mapper.Map<MessageDTOResponse>(Message));
-            }
-            return MessageDTOResponses;
+            throw new NotImplementedException();
         }
 
-        public async Task<MessageDTOResponse> GetAsync(MessageDTORequest entity)
+        public Task<ApiResponse<bool>> UpdateAsync(MessageDTORequest entity)
         {
-            var Message = await _uow.Value.MessageRepository.GetAsync(x => x.Id == entity.Id || x.Guid == entity.Guid);
-            var MessageResponse = _mapper.Map<MessageDTOResponse>(Message);
-            return MessageResponse;
-        }
-
-        public async Task UpdateAsync(MessageDTORequest entity)
-        {
-            var Message = await _uow.Value.MessageRepository.GetAsync(x => x.Id == entity.Id || x.Guid == entity.Guid);
-            Message = _mapper.Map(entity, Message);
-            await _uow.Value.MessageRepository.UpdateAsync(Message);
-            await _uow.Value.SaveChangeAsync();
+            throw new NotImplementedException();
         }
     }
 }

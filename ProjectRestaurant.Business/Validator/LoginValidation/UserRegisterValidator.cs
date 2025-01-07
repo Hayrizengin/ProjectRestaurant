@@ -24,7 +24,7 @@ namespace ProjectRestaurant.Business.Validator.LoginValidation
             RuleFor(q => q.Email).NotEmpty().WithMessage("Email Boş Olamaz");
             RuleFor(q => q.Password).NotEmpty().WithMessage("Şifre Boş Olamaz");
             RuleFor(q => q.Email).NotEmpty().WithMessage("E-Posta Boş Olamaz");
-            RuleFor(q => q.Email).MustAsync(CheckUniqueEMail).WithMessage("Farklı Bir E-Posta Adresi Giriniz.");
+            //RuleFor(q => q.Email).MustAsync(CheckUniqueEMail).WithMessage("Farklı Bir E-Posta Adresi Giriniz.");
             RuleFor(q => q.PhoneNumber).NotEmpty().WithMessage("Telefon Numarası Boş Olamaz");
         }
 

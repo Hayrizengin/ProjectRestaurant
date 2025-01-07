@@ -16,58 +16,79 @@ namespace ProjectRestaurant.DataAccess.Concrete.EntityFramework.DataManagement
         private readonly DbContext _context;
         private readonly DbSet<T> _dbSet;
 
-        public EfRepository(DbContext context) 
+        public EfRepository(DbContext context)
         {
             _context = context;
             _dbSet = _context.Set<T>();
         }
 
-        public async Task<EntityEntry<T>> AddAsync(T Entity)
-        {
-            return await _dbSet.AddAsync(Entity);
-        }
-
-        public async Task<IEnumerable<T>> GetAllAsync(Expression<Func<T, bool>> Filter = null, params string[] IncludeProperties)
-        {
-            IQueryable<T> query = _dbSet; 
-
-            if (Filter != null)
-            {
-                query = query.Where(Filter); 
-            }
-            if (IncludeProperties.Length > 0)
-            {
-                foreach (string includeProperty in IncludeProperties) 
-                {
-                    query = query.Include(includeProperty);
-                }
-            }
-            return await Task.Run(() => query);
-        }
-
-        public async Task<T> GetAsync(Expression<Func<T, bool>> Filter, params string[] IncludeProperties)
+        public async Task<T> GetAsync(Expression<Func<T, bool>> filter, params string[] includeProperties)
         {
             IQueryable<T> query = _dbSet;
 
-            if (IncludeProperties.Length > 0)
+            // Include edilen navigation property'leri ekle
+            foreach (var includeProperty in includeProperties)
             {
-                foreach (string includeProperty in IncludeProperties)
-                {
-                    query = query.Include(includeProperty);
-                }
+                query = query.Include(includeProperty);
             }
 
-            return await query.SingleOrDefaultAsync(Filter);
+            return await query.SingleOrDefaultAsync(filter);
         }
 
-        public async Task RemoveAsync(T Entity)
+        public async Task<T> GetByIdAsync(int id)
         {
-            await Task.Run(() => _dbSet.Remove(Entity));
+            return await _dbSet.FindAsync(id);
         }
 
-        public async Task UpdateAsync(T Entity)
+        public async Task<IQueryable<T>> GetAllAsync(Expression<Func<T, bool>> filter = null, params string[] includeProperties)
         {
-            await Task.Run(() => _dbSet.Update(Entity));
+            IQueryable<T> query = _dbSet;
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            // Include edilen navigation property'leri ekle
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+
+            return await Task.FromResult(query);
+        }
+
+        public async Task<IQueryable<T>> GetAllAsyncAsNoTracking(Expression<Func<T, bool>> filter = null, params string[] includeProperties)
+        {
+            IQueryable<T> query = _dbSet.AsNoTracking();
+
+            if (filter != null)
+            {
+                query = query.Where(filter);
+            }
+
+            // Include edilen navigation property'leri ekle
+            foreach (var includeProperty in includeProperties)
+            {
+                query = query.Include(includeProperty);
+            }
+
+            return await Task.FromResult(query);
+        }
+
+        public async ValueTask AddAsync(T entity)
+        {
+            await _dbSet.AddAsync(entity);
+        }
+
+        public void Update(T entity)
+        {
+            _dbSet.Update(entity);
+        }
+
+        public void Remove(T entity)
+        {
+            _dbSet.Remove(entity);
         }
     }
 }

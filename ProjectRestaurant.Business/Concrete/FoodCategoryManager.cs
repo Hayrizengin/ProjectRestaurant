@@ -3,6 +3,7 @@ using ProjectRestaurant.Business.Abstract;
 using ProjectRestaurant.DataAccess.Abstract.DataManagement;
 using ProjectRestaurant.Entity.DTO.FoodCategoryDTO;
 using ProjectRestaurant.Entity.Poco;
+using ProjectRestaurant.Tools.Response;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,58 +12,31 @@ using System.Threading.Tasks;
 
 namespace ProjectRestaurant.Business.Concrete
 {
-    public class FoodCategoryManager:IFoodCategoryService
+    public class FoodCategoryManager : IFoodCategoryService
     {
-        private readonly Lazy<IUnitOfWork> _uow;
-        private readonly IMapper _mapper;
-
-        public FoodCategoryManager(Lazy<IUnitOfWork> uow, IMapper mapper)
+        public Task<ApiResponse<FoodCategoryDTOResponse>> AddAsync(FoodCategoryDTORequest entity)
         {
-            _uow = uow;
-            _mapper = mapper;
+            throw new NotImplementedException();
         }
 
-        public async Task<FoodCategoryDTOResponse> AddAsync(FoodCategoryDTORequest entity)
+        public Task<ApiResponse<bool>> DeleteAsync(int id)
         {
-            FoodCategory FoodCategory = _mapper.Map<FoodCategory>(entity);
-            await _uow.Value.FoodCategoryRepository.AddAsync(FoodCategory);
-            await _uow.Value.SaveChangeAsync();
-
-            FoodCategoryDTOResponse FoodCategoryDTOResponse = _mapper.Map<FoodCategoryDTOResponse>(FoodCategory);
-            return FoodCategoryDTOResponse;
+            throw new NotImplementedException();
         }
 
-        public async Task DeleteAsync(FoodCategoryDTORequest entity)
+        public Task<ApiResponse<IEnumerable<FoodCategoryDTOResponse>>> GetAllAsync(FoodCategoryDTORequest entity)
         {
-            FoodCategory FoodCategory = _mapper.Map<FoodCategory>(entity);
-            await _uow.Value.FoodCategoryRepository.RemoveAsync(FoodCategory);
-            await _uow.Value.SaveChangeAsync();
+            throw new NotImplementedException();
         }
 
-        public async Task<List<FoodCategoryDTOResponse>> GetAllAsync(FoodCategoryDTORequest entity)
+        public Task<ApiResponse<FoodCategoryDTOResponse>> GetAsync(int id)
         {
-            var FoodCategorys = await _uow.Value.FoodCategoryRepository.GetAllAsync(x => true);
-            List<FoodCategoryDTOResponse> FoodCategoryDTOResponses = new();
-            foreach (var FoodCategory in FoodCategorys)
-            {
-                FoodCategoryDTOResponses.Add(_mapper.Map<FoodCategoryDTOResponse>(FoodCategory));
-            }
-            return FoodCategoryDTOResponses;
+            throw new NotImplementedException();
         }
 
-        public async Task<FoodCategoryDTOResponse> GetAsync(FoodCategoryDTORequest entity)
+        public Task<ApiResponse<bool>> UpdateAsync(FoodCategoryDTORequest entity)
         {
-            var FoodCategory = await _uow.Value.FoodCategoryRepository.GetAsync(x => x.Id == entity.Id || x.Guid == entity.Guid);
-            var FoodCategoryResponse = _mapper.Map<FoodCategoryDTOResponse>(FoodCategory);
-            return FoodCategoryResponse;
-        }
-
-        public async Task UpdateAsync(FoodCategoryDTORequest entity)
-        {
-            var FoodCategory = await _uow.Value.FoodCategoryRepository.GetAsync(x => x.Id == entity.Id || x.Guid == entity.Guid);
-            FoodCategory = _mapper.Map(entity, FoodCategory);
-            await _uow.Value.FoodCategoryRepository.UpdateAsync(FoodCategory);
-            await _uow.Value.SaveChangeAsync();
+            throw new NotImplementedException();
         }
     }
 }
