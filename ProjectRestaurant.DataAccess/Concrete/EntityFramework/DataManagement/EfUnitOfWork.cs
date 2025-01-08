@@ -18,9 +18,9 @@ namespace ProjectRestaurant.DataAccess.Concrete.EntityFramework.DataManagement
         private readonly ProjectRestaurantContext _restaurantContext;
         private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public EfUnitOfWork(ProjectRestaurantContext _restaurantContext, IHttpContextAccessor httpContextAccessor)
+        public EfUnitOfWork(ProjectRestaurantContext restaurantContext, IHttpContextAccessor httpContextAccessor)
         {
-            _restaurantContext = _restaurantContext;
+            _restaurantContext = restaurantContext;
             _httpContextAccessor = httpContextAccessor;
             AboutRepository = new EfAboutRepository(_restaurantContext);
             BannerRepository = new EfBannerRepository(_restaurantContext);

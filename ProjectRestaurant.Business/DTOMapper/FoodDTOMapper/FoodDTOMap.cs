@@ -24,6 +24,10 @@ namespace ProjectRestaurant.Business.DTOMapper.FoodDTOMapper
                 opt.MapFrom(src => src.FoodCategory.Name);
             }).ReverseMap();
 
+            //addRequest
+            CreateMap<FoodDTOAddRequest, Food>();
+            CreateMap<Food, FoodDTOAddRequest>();
+
             //etc
         }
     }

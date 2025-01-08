@@ -33,7 +33,7 @@ namespace ProjectRestaurant.Business.Concrete
         /// <param name="entity">Eklenecek öğrenin request DTO'su</param>
         /// <returns>Eklenen öğrenin return DTO'su</returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<ApiResponse<AboutDTOResponse>> AddAsync(AboutDTORequest entity)
+        public async Task<ApiResponse<AboutDTOResponse>> AddAsync(AboutDTOAddRequest entity)
         {
             // Gelen DTO'yu doğrula
             //await _validator.ValidateAsync(entity,typeof(AboutAddValidator));
@@ -82,10 +82,10 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<bool>.SuccessResult(true);
         }
 
-        public async Task<ApiResponse<IEnumerable<AboutDTOResponse>>> GetAllAsync(AboutDTORequest entity)
+        public async Task<ApiResponse<IEnumerable<AboutDTOResponse>>> GetAllAsync(AboutDTOAddRequest entity)
         {
             // tüm verileri al
-            var abouts = await _uow.AboutRepository.GetAllAsync(x=>x.IsActive == true);
+            var abouts = await _uow.AboutRepository.GetAllAsync(x=>x.IsActive == true && x.IsDeleted==false);
 
             //eğer veri yoksa hata döndür
             if (!abouts.Any())
@@ -102,7 +102,7 @@ namespace ProjectRestaurant.Business.Concrete
         public async Task<ApiResponse<AboutDTOResponse>> GetAsync(int id)
         {
             // veriyi id ile bul
-            var about = await _uow.AboutRepository.GetAsync(x=>x.Id == id);
+            var about = await _uow.AboutRepository.GetAsync(x=>x.Id == id && x.IsActive==true && x.IsDeleted==false);
 
             //veri bulunmazsa hata döndür.
             if (about is null)

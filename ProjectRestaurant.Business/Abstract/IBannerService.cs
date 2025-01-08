@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjectRestaurant.Business.Abstract
 {
-    public interface IBannerService:IGenericService<BannerDTORequest, BannerDTOResponse>
+    public interface IBannerService:IGenericService<BannerDTORequest, BannerDTOResponse,BannerDTOAddRequest>
     {
     }
 }

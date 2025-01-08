@@ -21,6 +21,10 @@ namespace ProjectRestaurant.Business.DTOMapper.FoodCategoryMapper
             CreateMap<FoodCategoryDTOResponse, FoodCategory>();
             CreateMap<FoodCategory, FoodCategoryDTOResponse>();
 
+            //addRequest
+            CreateMap<FoodCategoryDTOAddRequest, FoodCategory>();
+            CreateMap<FoodCategory, FoodCategoryDTOAddRequest>();
+
             //etc
         }
     }

@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace ProjectRestaurant.Business.Abstract
 {
-    public interface IGenericService<TRequest,TResponse>
+    public interface IGenericService<TRequest,TResponse,TAddRequest>
     {
-        Task<ApiResponse<TResponse>>AddAsync(TRequest entity);
+        Task<ApiResponse<TResponse>>AddAsync(TAddRequest entity);
         Task<ApiResponse<bool>> UpdateAsync(TRequest entity);
         Task<ApiResponse<bool>> DeleteAsync(int id);
         Task<ApiResponse<TResponse>> GetAsync(int id);
-        Task<ApiResponse<IEnumerable<TResponse>>> GetAllAsync(TRequest entity);
+        Task<ApiResponse<IEnumerable<TResponse>>> GetAllAsync(TAddRequest? entity);
     }
 }

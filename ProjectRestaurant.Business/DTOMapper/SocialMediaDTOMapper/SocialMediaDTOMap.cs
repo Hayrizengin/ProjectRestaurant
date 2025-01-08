@@ -21,6 +21,10 @@ namespace ProjectRestaurant.Business.DTOMapper.SocialMediaDTOMapper
             CreateMap<SocialMediaDTOResponse, SocialMedia>();
             CreateMap<SocialMedia, SocialMediaDTOResponse>();
 
+            //addRequest
+            CreateMap<SocialMediaDTOAddRequest, SocialMedia>();
+            CreateMap<SocialMedia, SocialMediaDTOAddRequest>();
+
             //etc
         }
     }

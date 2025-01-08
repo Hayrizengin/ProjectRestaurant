@@ -13,5 +13,7 @@ namespace ProjectRestaurant.Entity.DTO.FoodCategoryDTO
         public Guid Guid { get; set; }
         public string Name { get; set; }
         public List<FoodDTOResponse> Foods { get; set; }
+        public bool? IsActive { get; set; }
+        public bool? IsDeleted { get; set; }
     }
 }

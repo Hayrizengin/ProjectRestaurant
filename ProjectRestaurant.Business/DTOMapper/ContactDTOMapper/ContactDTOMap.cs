@@ -21,6 +21,10 @@ namespace ProjectRestaurant.Business.DTOMapper.ContactDTOMapper
             CreateMap<ContactDTOResponse,Contact>();
             CreateMap<Contact, ContactDTOResponse>();
 
+            //addRequest
+            CreateMap<ContactDTOAddRequest, Contact>();
+            CreateMap<Contact, ContactDTOAddRequest>();
+
             //etc
         }
     }

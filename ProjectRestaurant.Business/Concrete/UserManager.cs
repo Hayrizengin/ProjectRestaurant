@@ -36,11 +36,13 @@ namespace ProjectRestaurant.Business.Concrete
             _tokenService = tokenService;
         }
 
-        public async Task<ApiResponse<UserDTOResponse>> AddAsync(UserDTORequest entity)
+        public async Task<ApiResponse<UserDTOResponse>> AddAsync(UserDTOAddRequest entity)
         {
             await _validator.ValidateAsync(entity,typeof(UserRegisterValidator));
-
+            // Kullanıcı şifresini hashle
+            var hashedPassword = _passwordHasher.HashPassword(entity.Password);
             var user = _mapper.Map<User>(entity);
+            user.Password = hashedPassword;
 
             await _uow.UserRepository.AddAsync(user);
             await _uow.SaveChangeAsync();
@@ -70,9 +72,9 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<bool>.SuccessResult(true);
         }
 
-        public async Task<ApiResponse<IEnumerable<UserDTOResponse>>> GetAllAsync(UserDTORequest entity)
+        public async Task<ApiResponse<IEnumerable<UserDTOResponse>>> GetAllAsync(UserDTOAddRequest? entity)
         {
-            var users = await _uow.UserRepository.GetAllAsync(x=>x.IsActive == true && x.IsDeleted == false);
+            var users = await _uow.UserRepository.GetAllAsync();
 
             if (!users.Any())
             {
@@ -86,7 +88,7 @@ namespace ProjectRestaurant.Business.Concrete
 
         public async Task<ApiResponse<UserDTOResponse>> GetAsync(int id)
         {
-            var user = await _uow.UserRepository.GetAsync(x=>x.Id == id);
+            var user = await _uow.UserRepository.GetAsync(x=>x.Id == id && x.IsActive == true && x.IsDeleted == false);
 
             if (user is null)
             {
@@ -104,7 +106,7 @@ namespace ProjectRestaurant.Business.Concrete
 
         public async Task<ApiResponse<UserDTOResponse>> GetUserByEMailAsync(string eMailAddress)
         {
-            var user = await _uow.UserRepository.GetAsync(x=>x.Email.ToLower() == eMailAddress.ToLower());
+            var user = await _uow.UserRepository.GetAsync(x=>x.Email.ToLower() == eMailAddress.ToLower() && x.IsDeleted == false);
 
             if (user is null)
             {
@@ -122,7 +124,7 @@ namespace ProjectRestaurant.Business.Concrete
         {
             await _validator.ValidateAsync(loginRequestDTO,typeof(LoginValidator));
 
-            var user = await _uow.UserRepository.GetAsync(x=>x.Email == loginRequestDTO.Email);
+            var user = await _uow.UserRepository.GetAsync(x=>x.Email == loginRequestDTO.Email && x.IsActive==true && x.IsDeleted==false);
 
             if (user == null || !_passwordHasher.VerifyPassword(user.Password,loginRequestDTO.Password))
             {
@@ -139,7 +141,7 @@ namespace ProjectRestaurant.Business.Concrete
                     new Claim("UserEMail",user.Email)
                 };
                 var token = _tokenService.GenerateToken(claims);
-                var loginResponseDTO = _mapper.Map<LoginDTOResponse>(loginRequestDTO);
+                var loginResponseDTO = _mapper.Map<LoginDTOResponse>(user);
                 loginResponseDTO.Token = token;
                 return ApiResponse<LoginDTOResponse>.SuccessResult(loginResponseDTO);
             }

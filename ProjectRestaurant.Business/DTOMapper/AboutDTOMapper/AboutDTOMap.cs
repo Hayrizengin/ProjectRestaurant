@@ -21,6 +21,10 @@ namespace ProjectRestaurant.Business.DTOMapper.AboutDTOMapper
             CreateMap<AboutDTOResponse, About>();
             CreateMap<About,AboutDTOResponse>();
 
+            //AddRequest
+            CreateMap<AboutDTOAddRequest, About>();
+            CreateMap<About,AboutDTOAddRequest>();
+
             //etc
         }
     }

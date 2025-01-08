@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProjectRestaurant.Business.Abstract
 {
-    public interface IContactService:IGenericService<ContactDTORequest,ContactDTOResponse>
+    public interface IContactService:IGenericService<ContactDTORequest,ContactDTOResponse,ContactDTOAddRequest>
     {
     }
 }

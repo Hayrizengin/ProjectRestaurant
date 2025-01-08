@@ -6,14 +6,10 @@ using System.Threading.Tasks;
 
 namespace ProjectRestaurant.Entity.DTO.ContactDTO
 {
-    public class ContactDTOResponse
+    public class ContactDTOAddRequest
     {
-        public int Id { get; set; }
-        public Guid Guid { get; set; }
         public string Address { get; set; }
         public string Phone { get; set; }
         public string Email { get; set; }
-        public bool? IsActive { get; set; }
-        public bool? IsDeleted { get; set; }
     }
 }

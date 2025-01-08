@@ -20,15 +20,6 @@ namespace ProjectRestaurant.DataAccess.Concrete.EntityFramework.Context
 
         }
 
-        public DbSet<User> User { get; set; }
-        public DbSet<Banner> Banner { get; set; }
-        public DbSet<Contact> Contact { get; set; }
-        public DbSet<Food> Food { get; set; }
-        public DbSet<FoodCategory> FoodCategory { get; set; }
-        public DbSet<Message> Message { get; set; }
-        public DbSet<SocialMedia> SocialMedia { get; set; }
-        public DbSet<SpecialRecipe> SpecialRecipe { get; set; }
-        public DbSet<About> About { get; set; }
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -37,6 +28,17 @@ namespace ProjectRestaurant.DataAccess.Concrete.EntityFramework.Context
             }
             base.OnConfiguring(optionsBuilder);
         }
+
+        public DbSet<User> Users { get; set; }
+        public DbSet<Banner> Banners { get; set; }
+        public DbSet<Contact> Contacts { get; set; }
+        public DbSet<Food> Foods { get; set; }
+        public DbSet<FoodCategory> FoodCategories { get; set; }
+        public DbSet<Message> Messages { get; set; }
+        public DbSet<SocialMedia> SocialMedias { get; set; }
+        public DbSet<SpecialRecipe> SpecialRecipes { get; set; }
+        public DbSet<About> Abouts { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.ApplyConfiguration(new AboutMap());

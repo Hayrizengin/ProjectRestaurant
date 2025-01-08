@@ -21,6 +21,10 @@ namespace ProjectRestaurant.Business.DTOMapper.MessageDTOMapper
             CreateMap<MessageDTOResponse, Message>();
             CreateMap<Message, MessageDTOResponse>();
 
+            //addRequest
+            CreateMap<MessageDTOAddRequest, Message>();
+            CreateMap<Message,MessageDTOAddRequest>();
+
             //etc
         }
     }
