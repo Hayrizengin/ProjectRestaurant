@@ -36,7 +36,7 @@ namespace ProjectRestaurant.Business.Concrete
             _tokenService = tokenService;
         }
 
-        public async Task<ApiResponse<UserDTOResponse>> AddAsync(UserDTOAddRequest entity)
+        public async Task<ApiResponse<UserDTOResponse>> AddAsync(UserDTORequest entity)
         {
             await _validator.ValidateAsync(entity,typeof(UserRegisterValidator));
             // Kullanıcı şifresini hashle
@@ -72,7 +72,7 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<bool>.SuccessResult(true);
         }
 
-        public async Task<ApiResponse<IEnumerable<UserDTOResponse>>> GetAllAsync(UserDTOAddRequest? entity)
+        public async Task<ApiResponse<IEnumerable<UserDTOResponse>>> GetAllAsync(UserDTORequest? entity)
         {
             var users = await _uow.UserRepository.GetAllAsync();
 
@@ -147,7 +147,7 @@ namespace ProjectRestaurant.Business.Concrete
             }
         }
 
-        public async Task<ApiResponse<bool>> UpdateAsync(UserDTORequest entity)
+        public async Task<ApiResponse<bool>> UpdateAsync(UserDTOUpdateRequest entity)
         {
             await _validator.ValidateAsync(entity,typeof(UserUpdateValidator));
 

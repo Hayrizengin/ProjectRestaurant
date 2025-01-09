@@ -26,7 +26,7 @@ namespace ProjectRestaurant.Business.Concrete
             _mapper = mapper;
             _uow = uow;
         }
-        public async Task<ApiResponse<SocialMediaDTOResponse>> AddAsync(SocialMediaDTOAddRequest entity)
+        public async Task<ApiResponse<SocialMediaDTOResponse>> AddAsync(SocialMediaDTORequest entity)
         {
             //_validator.ValidateAsync(entity,typeof(SocialMediaDTOAddValidator));
 
@@ -57,7 +57,7 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<bool>.SuccessResult(true);
         }
 
-        public async Task<ApiResponse<IEnumerable<SocialMediaDTOResponse>>> GetAllAsync(SocialMediaDTOAddRequest? entity)
+        public async Task<ApiResponse<IEnumerable<SocialMediaDTOResponse>>> GetAllAsync(SocialMediaDTORequest? entity)
         {
             var socialMedias = await _uow.SocialMediaRepository.GetAllAsync(x=>x.IsActive == true && x.IsDeleted == false);
 
@@ -85,7 +85,7 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<SocialMediaDTOResponse>.SuccessResult(socialMediaDTOResponse);
         }
 
-        public async Task<ApiResponse<bool>> UpdateAsync(SocialMediaDTORequest entity)
+        public async Task<ApiResponse<bool>> UpdateAsync(SocialMediaDTOUpdateRequest entity)
         {
             var socialMedia = await _uow.SocialMediaRepository.GetAsync(x=>x.Id == entity.Id && x.IsActive == true && x.IsDeleted == false);
 

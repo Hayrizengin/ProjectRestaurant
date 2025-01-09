@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace ProjectRestaurant.Entity.DTO.FoodDTO
 {
-    public class FoodDTOAddRequest
+    public class FoodDTOUpdateRequest
     {
+        public int Id { get; set; }
+        public Guid Guid { get; set; }
         public string Name { get; set; }
         public decimal Price { get; set; }
         public string ImageUrl { get; set; }

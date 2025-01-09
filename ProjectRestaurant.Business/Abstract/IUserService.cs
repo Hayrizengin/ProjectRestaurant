@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProjectRestaurant.Business.Abstract
 {
-    public interface IUserService:IGenericService<UserDTORequest,UserDTOResponse,UserDTOAddRequest>
+    public interface IUserService:IGenericService<UserDTORequest,UserDTOResponse,UserDTOUpdateRequest>
     {
         Task<ApiResponse<LoginDTOResponse>> LoginAsync(LoginDTORequest loginRequestDTO);
         Task<ApiResponse<UserDTOResponse>> GetUserByEMailAsync(string eMailAddress);

@@ -21,9 +21,9 @@ namespace ProjectRestaurant.Business.DTOMapper.UserDTOMapper
             CreateMap<UserDTOResponse, User>();
             CreateMap<User, UserDTOResponse>();
 
-            //addRequest
-            CreateMap<UserDTOAddRequest, User>();
-            CreateMap<User,UserDTOAddRequest>();
+            //UpdateRequest
+            CreateMap<UserDTOUpdateRequest, User>();
+            CreateMap<User, UserDTOUpdateRequest>();
 
             //etc
         }

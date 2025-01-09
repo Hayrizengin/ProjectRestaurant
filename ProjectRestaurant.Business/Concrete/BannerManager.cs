@@ -27,7 +27,7 @@ namespace ProjectRestaurant.Business.Concrete
             _uow = uow;
         }
 
-        public async Task<ApiResponse<BannerDTOResponse>> AddAsync(BannerDTOAddRequest entity)
+        public async Task<ApiResponse<BannerDTOResponse>> AddAsync(BannerDTORequest entity)
         {
             //await _validator.ValidateAsync(entity,typeof(BannerValidator));
 
@@ -61,7 +61,7 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<bool>.SuccessResult(true);
         }
 
-        public async Task<ApiResponse<IEnumerable<BannerDTOResponse>>> GetAllAsync(BannerDTOAddRequest? entity)
+        public async Task<ApiResponse<IEnumerable<BannerDTOResponse>>> GetAllAsync(BannerDTORequest? entity)
         {
             var banners = await _uow.BannerRepository.GetAllAsync(x=>x.IsActive==true && x.IsDeleted==false);
 
@@ -92,7 +92,7 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<BannerDTOResponse>.SuccessResult(bannerDTOResponse);
         }
 
-        public async Task<ApiResponse<bool>> UpdateAsync(BannerDTORequest entity)
+        public async Task<ApiResponse<bool>> UpdateAsync(BannerDTOUpdateRequest entity)
         {
             var banner = await _uow.BannerRepository.GetAsync(x=>x.Id == entity.Id && x.IsActive == true && x.IsDeleted == false);
 

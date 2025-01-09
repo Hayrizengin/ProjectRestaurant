@@ -28,7 +28,7 @@ namespace ProjectRestaurant.Business.Concrete
             _uow = uow;
         }
 
-        public async Task<ApiResponse<MessageDTOResponse>> AddAsync(MessageDTOAddRequest entity)
+        public async Task<ApiResponse<MessageDTOResponse>> AddAsync(MessageDTORequest entity)
         {
             //await _validator.ValidateAsync(entity,typeof(MessageValidator));
 
@@ -62,7 +62,7 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<bool>.SuccessResult(true);
         }
 
-        public async Task<ApiResponse<IEnumerable<MessageDTOResponse>>> GetAllAsync(MessageDTOAddRequest? entity)
+        public async Task<ApiResponse<IEnumerable<MessageDTOResponse>>> GetAllAsync(MessageDTORequest? entity)
         {
             var messages = await _uow.MessageRepository.GetAllAsync(x => x.IsActive == true && x.IsDeleted == false);
 
@@ -93,7 +93,7 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<MessageDTOResponse>.SuccessResult(messageDTOResponse);
         }
 
-        public async Task<ApiResponse<bool>> UpdateAsync(MessageDTORequest entity)
+        public async Task<ApiResponse<bool>> UpdateAsync(MessageDTOUpdateRequest entity)
         {
             var message = await _uow.MessageRepository.GetAsync(x => x.Id == entity.Id && x.IsActive == true && x.IsDeleted == false);
 

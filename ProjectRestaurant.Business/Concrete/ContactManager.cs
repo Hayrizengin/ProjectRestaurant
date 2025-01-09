@@ -26,7 +26,7 @@ namespace ProjectRestaurant.Business.Concrete
             _validator = validator;
         }
 
-        public async Task<ApiResponse<ContactDTOResponse>> AddAsync(ContactDTOAddRequest entity)
+        public async Task<ApiResponse<ContactDTOResponse>> AddAsync(ContactDTORequest entity)
         {
             //_validator.ValidateAsync(entity,typeof(ContactAddValidator));
             var contact = _mapper.Map<Contact>(entity);
@@ -56,7 +56,7 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<bool>.SuccessResult(true);
         }
 
-        public async Task<ApiResponse<IEnumerable<ContactDTOResponse>>> GetAllAsync(ContactDTOAddRequest? entity)
+        public async Task<ApiResponse<IEnumerable<ContactDTOResponse>>> GetAllAsync(ContactDTORequest? entity)
         {
             var contacts = await _uow.ContactRepository.GetAllAsync(x=>x.IsActive == true && x.IsDeleted == false);
 
@@ -84,7 +84,7 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<ContactDTOResponse>.SuccessResult(contactResponse);
         }
 
-        public async Task<ApiResponse<bool>> UpdateAsync(ContactDTORequest entity)
+        public async Task<ApiResponse<bool>> UpdateAsync(ContactDTOUpdateRequest entity)
         {
             var contact = await _uow.ContactRepository.GetAsync(x=>x.Id == entity.Id && x.IsActive == true && x.IsDeleted == false);
 

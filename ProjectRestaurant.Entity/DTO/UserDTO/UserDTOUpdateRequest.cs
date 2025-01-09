@@ -7,8 +7,10 @@ using System.Threading.Tasks;
 
 namespace ProjectRestaurant.Entity.DTO.UserDTO
 {
-    public class UserDTOAddRequest
+    public class UserDTOUpdateRequest
     {
+        public int Id { get; set; }
+        public Guid Guid { get; set; }
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string FullName => $"{FirstName} {LastName}";

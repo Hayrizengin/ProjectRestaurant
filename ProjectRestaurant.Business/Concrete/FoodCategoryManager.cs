@@ -26,7 +26,7 @@ namespace ProjectRestaurant.Business.Concrete
             _validator = validator;
         }
 
-        public async Task<ApiResponse<FoodCategoryDTOResponse>> AddAsync(FoodCategoryDTOAddRequest entity)
+        public async Task<ApiResponse<FoodCategoryDTOResponse>> AddAsync(FoodCategoryDTORequest entity)
         {
             //_validator.ValidateAsync(entity,(typeof FoodCategoryAddValidator));
 
@@ -59,7 +59,7 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<bool>.SuccessResult(true);
         }
 
-        public async Task<ApiResponse<IEnumerable<FoodCategoryDTOResponse>>> GetAllAsync(FoodCategoryDTOAddRequest? entity)
+        public async Task<ApiResponse<IEnumerable<FoodCategoryDTOResponse>>> GetAllAsync(FoodCategoryDTORequest? entity)
         {
             var foodCategories = await _uow.FoodCategoryRepository.GetAllAsync(x=>x.IsActive == true && x.IsDeleted == false);
 
@@ -87,7 +87,7 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<FoodCategoryDTOResponse>.SuccessResult(foodCategoryResponse);
         }
 
-        public async Task<ApiResponse<bool>> UpdateAsync(FoodCategoryDTORequest entity)
+        public async Task<ApiResponse<bool>> UpdateAsync(FoodCategoryDTOUpdateRequest entity)
         {
             var foodCategory = await _uow.FoodCategoryRepository.GetAsync(x=>x.Id == entity.Id && x.IsActive == true && x.IsDeleted == false);
 

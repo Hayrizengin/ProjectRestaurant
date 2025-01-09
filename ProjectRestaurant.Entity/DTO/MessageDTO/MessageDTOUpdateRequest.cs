@@ -6,8 +6,10 @@ using System.Threading.Tasks;
 
 namespace ProjectRestaurant.Entity.DTO.MessageDTO
 {
-    public class MessageDTOAddRequest
+    public class MessageDTOUpdateRequest
     {
+        public int Id { get; set; }
+        public Guid Guid { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
         public string Subject { get; set; }

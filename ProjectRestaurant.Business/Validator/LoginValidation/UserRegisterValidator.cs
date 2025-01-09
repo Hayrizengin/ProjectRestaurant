@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ProjectRestaurant.Business.Validator.LoginValidation
 {
-    public class UserRegisterValidator:AbstractValidator<UserDTOAddRequest>
+    public class UserRegisterValidator:AbstractValidator<UserDTORequest>
     {
         private static IUserService _userService;
     public static void Initialize(IUserService userService)

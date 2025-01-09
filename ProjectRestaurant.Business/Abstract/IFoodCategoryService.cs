@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjectRestaurant.Business.Abstract
 {
-    public interface IFoodCategoryService:IGenericService<FoodCategoryDTORequest,FoodCategoryDTOResponse,FoodCategoryDTOAddRequest>
+    public interface IFoodCategoryService:IGenericService<FoodCategoryDTORequest,FoodCategoryDTOResponse,FoodCategoryDTOUpdateRequest>
     {
     }
 }

@@ -4,6 +4,7 @@ using ProjectRestaurant.Business.Abstract;
 using ProjectRestaurant.Entity.DTO.LoginDTO;
 using ProjectRestaurant.Entity.DTO.UserDTO;
 using ProjectRestaurant.Tools.Response;
+using System.Net;
 
 namespace ProjectRestaurant.API.Controllers
 {
@@ -18,47 +19,53 @@ namespace ProjectRestaurant.API.Controllers
             _userService = userService;
         }
 
-        [HttpPost("/AddUser")]
-        public async Task<IActionResult> AddUser([FromBody] UserDTOAddRequest userDTOAddRequest)
+        [HttpPost("AddUser")]
+        public async Task<IActionResult> AddUser([FromBody] UserDTORequest userDTOAddRequest)
         {
             var result = await _userService.AddAsync(userDTOAddRequest);
             return Ok(result);
         }
 
-        [HttpPost("/Users")]
+        [HttpPost("GetUsers")]
         [ProducesResponseType(typeof(List<UserDTOResponse>),StatusCodes.Status200OK)]
-        public async Task<IActionResult> GetAllUsers(UserDTOAddRequest userDTOAddRequest)
+        public async Task<IActionResult> GetUsers(UserDTORequest userDTOAddRequest)
         {
             var result = await _userService.GetAllAsync(userDTOAddRequest);
             return Ok(result);
         }
 
-        [HttpGet("/User/{userId}")]
-        public async Task<IActionResult> GetUser(int userId)
+        [HttpGet("GetUser/{id}")]
+        public async Task<IActionResult> GetUser(int id)
         {
-            var result = await _userService.GetAsync(userId);
+            var result = await _userService.GetAsync(id);
             return Ok(result);
         }
 
-        [HttpPut("/UpdateUser/{idOrGuid}")]
-        public async Task<IActionResult> UpdateUser([FromBody] UserDTORequest userDTORequest)
+        [HttpPost("UpdateUser")]
+        public async Task<IActionResult> UpdateUser([FromBody] UserDTOUpdateRequest userDTORequest)
         {
             var result = await _userService.UpdateAsync(userDTORequest);
             return Ok(result);
         }
 
-        [HttpDelete("/DeleteUser/{userId}")]
-        public async Task<IActionResult> DeleteUser(int userId)
+        [HttpPost("DeleteUser")]
+        public async Task<IActionResult> DeleteUser(int id)
         {
-            var result = await _userService.DeleteAsync(userId);
+            var result = await _userService.DeleteAsync(id);
             return Ok(result);
         }
 
-        [HttpPost("/Login")]
+        [HttpPost("Login")]
         public async Task<IActionResult> Login(LoginDTORequest loginDTORequest)
         {
             var result = await _userService.LoginAsync(loginDTORequest);
-            return Ok(result);
+
+            if (result.StatusCode == HttpStatusCode.OK)
+            {
+                return Ok(result);
+            }
+
+            return NotFound(result);
         }
 
     }

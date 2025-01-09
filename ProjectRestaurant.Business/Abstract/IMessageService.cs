@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjectRestaurant.Business.Abstract
 {
-    public interface IMessageService:IGenericService<MessageDTORequest, MessageDTOResponse,MessageDTOAddRequest>
+    public interface IMessageService:IGenericService<MessageDTORequest, MessageDTOResponse,MessageDTOUpdateRequest>
     {
     }
 }

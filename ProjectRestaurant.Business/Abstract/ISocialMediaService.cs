@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjectRestaurant.Business.Abstract
 {
-    public interface ISocialMediaService:IGenericService<SocialMediaDTORequest,SocialMediaDTOResponse,SocialMediaDTOAddRequest>
+    public interface ISocialMediaService:IGenericService<SocialMediaDTORequest,SocialMediaDTOResponse,SocialMediaDTOUpdateRequest>
     {
     }
 }

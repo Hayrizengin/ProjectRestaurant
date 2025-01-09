@@ -33,7 +33,7 @@ namespace ProjectRestaurant.Business.Concrete
         /// <param name="entity">Eklenecek öğrenin request DTO'su</param>
         /// <returns>Eklenen öğrenin return DTO'su</returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<ApiResponse<AboutDTOResponse>> AddAsync(AboutDTOAddRequest entity)
+        public async Task<ApiResponse<AboutDTOResponse>> AddAsync(AboutDTORequest entity)
         {
             // Gelen DTO'yu doğrula
             //await _validator.ValidateAsync(entity,typeof(AboutAddValidator));
@@ -82,7 +82,7 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<bool>.SuccessResult(true);
         }
 
-        public async Task<ApiResponse<IEnumerable<AboutDTOResponse>>> GetAllAsync(AboutDTOAddRequest entity)
+        public async Task<ApiResponse<IEnumerable<AboutDTOResponse>>> GetAllAsync(AboutDTORequest entity)
         {
             // tüm verileri al
             var abouts = await _uow.AboutRepository.GetAllAsync(x=>x.IsActive == true && x.IsDeleted==false);
@@ -116,7 +116,7 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<AboutDTOResponse>.SuccessResult(aboutDTOResponse);
         }
 
-        public async Task<ApiResponse<bool>> UpdateAsync(AboutDTORequest entity)
+        public async Task<ApiResponse<bool>> UpdateAsync(AboutDTOUpdateRequest entity)
         {
             // veriyi doğrula
             // await _validator.ValidateAsync(entity,typeof(AboutUpdateValidator));

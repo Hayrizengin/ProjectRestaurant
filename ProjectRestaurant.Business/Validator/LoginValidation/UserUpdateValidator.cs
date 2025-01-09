@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ProjectRestaurant.Business.Validator.LoginValidation
 {
-    public class UserUpdateValidator : AbstractValidator<UserDTORequest>
+    public class UserUpdateValidator : AbstractValidator<UserDTOUpdateRequest>
     {
         public UserUpdateValidator()
         {

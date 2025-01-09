@@ -22,8 +22,8 @@ namespace ProjectRestaurant.Business.DTOMapper.SpecialRecipeDTOMapper
             CreateMap<SpecialRecipe,SpecialRecipeDTOResponse>();
 
             //addRequest
-            CreateMap<SpecialRecipeDTOAddRequest, SpecialRecipe>();
-            CreateMap<SpecialRecipe, SpecialRecipeDTOAddRequest>();
+            CreateMap<SpecialRecipeDTOUpdateRequest, SpecialRecipe>();
+            CreateMap<SpecialRecipe, SpecialRecipeDTOUpdateRequest>();
 
             //etc
         }

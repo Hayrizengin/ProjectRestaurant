@@ -21,9 +21,9 @@ namespace ProjectRestaurant.Business.DTOMapper.BannerDTOMapper
             CreateMap<BannerDTOResponse, Banner>();
             CreateMap<Banner, BannerDTOResponse>();
 
-            //addRequest
-            CreateMap<BannerDTOAddRequest, Banner>();
-            CreateMap<Banner,BannerDTOAddRequest>();
+            //UpdateRequest
+            CreateMap<BannerDTOUpdateRequest, Banner>();
+            CreateMap<Banner, BannerDTOUpdateRequest>();
 
             //etc
         }

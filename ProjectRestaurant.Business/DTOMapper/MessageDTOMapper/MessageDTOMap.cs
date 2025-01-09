@@ -17,13 +17,14 @@ namespace ProjectRestaurant.Business.DTOMapper.MessageDTOMapper
             CreateMap<MessageDTORequest, Message>();
             CreateMap<Message, MessageDTORequest>();
 
+
             //response
             CreateMap<MessageDTOResponse, Message>();
             CreateMap<Message, MessageDTOResponse>();
 
-            //addRequest
-            CreateMap<MessageDTOAddRequest, Message>();
-            CreateMap<Message,MessageDTOAddRequest>();
+            //UpdateRequest
+            CreateMap<MessageDTOUpdateRequest, Message>();
+            CreateMap<Message, MessageDTOUpdateRequest>();
 
             //etc
         }

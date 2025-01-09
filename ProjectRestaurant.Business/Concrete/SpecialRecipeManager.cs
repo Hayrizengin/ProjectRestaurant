@@ -26,7 +26,7 @@ namespace ProjectRestaurant.Business.Concrete
             _uow = uow;
             _mapper = mapper;
         }
-        public async Task<ApiResponse<SpecialRecipeDTOResponse>> AddAsync(SpecialRecipeDTOAddRequest entity)
+        public async Task<ApiResponse<SpecialRecipeDTOResponse>> AddAsync(SpecialRecipeDTORequest entity)
         {
             var specialRecipe = _mapper.Map<SpecialRecipe>(entity);
 
@@ -56,7 +56,7 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<bool>.SuccessResult(true);
         }
 
-        public async Task<ApiResponse<IEnumerable<SpecialRecipeDTOResponse>>> GetAllAsync(SpecialRecipeDTOAddRequest? entity)
+        public async Task<ApiResponse<IEnumerable<SpecialRecipeDTOResponse>>> GetAllAsync(SpecialRecipeDTORequest? entity)
         {
             var specialRecipes = await _uow.SpecialRecipeRepository.GetAllAsync(x=>x.IsActive == true && x.IsDeleted == false);
 
@@ -84,7 +84,7 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<SpecialRecipeDTOResponse>.SuccessResult(specialRecipeDTOResponse);
         }
 
-        public async Task<ApiResponse<bool>> UpdateAsync(SpecialRecipeDTORequest entity)
+        public async Task<ApiResponse<bool>> UpdateAsync(SpecialRecipeDTOUpdateRequest entity)
         {
             var specialRecipe = await _uow.SpecialRecipeRepository.GetAsync(x => x.Id == entity.Id && x.IsActive == true && x.IsDeleted == false);
 

@@ -15,15 +15,15 @@ namespace ProjectRestaurant.Business.DTOMapper.AboutDTOMapper
         {
             //Request
             CreateMap<AboutDTORequest, About>();
-            CreateMap<About,AboutDTORequest>();
+            CreateMap<About, AboutDTORequest>();
 
             //Response
             CreateMap<AboutDTOResponse, About>();
             CreateMap<About,AboutDTOResponse>();
 
-            //AddRequest
-            CreateMap<AboutDTOAddRequest, About>();
-            CreateMap<About,AboutDTOAddRequest>();
+            //UpdateRequest
+            CreateMap<AboutDTOUpdateRequest, About>();
+            CreateMap<About, AboutDTOUpdateRequest>();
 
             //etc
         }
