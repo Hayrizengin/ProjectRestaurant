@@ -8,8 +8,8 @@ namespace ProjectRestaurant.Entity.DTO.AboutDTO
 {
     public class AboutDTORequest
     {
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string ImageUrl { get; set; }
+        public string Title { get; set; } = "string";
+        public string Description { get; set; } = "string";
+        public string ImageUrl { get; set; } = "string";
     }
 }

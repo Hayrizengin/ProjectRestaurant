@@ -1,0 +1,48 @@
+﻿@using ProjectRestaurant.WebUI.Areas.AdminPanel.Models
+@model AboutViewModel
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Areas/AdminPanel/Views/Shared/_Layout.cshtml";
+}
+
+<body>
+
+	<section class="section">
+		<div class="row">
+			<div class="col-lg-12">
+
+				<div class="card">
+					<div class="card-body">
+						<!-- Table with stripped rows -->
+						<table class="table datatable">
+							<thead>
+								<tr>
+									<th>
+										<b>B</b>aşlık
+									</th>
+									<th>Açıklama</th>
+									<th>Resim</th>
+								</tr>
+							</thead>
+							<tbody>
+								@foreach (var about in Model.Abouts)
+								{
+									<tr>
+										<td>@about.Title</td>
+										<td>@about.Description</td>
+										<td>@about.ImageUrl</td>
+									</tr>
+								}
+							</tbody>
+						</table>
+						<!-- End Table with stripped rows -->
+
+					</div>
+				</div>
+
+			</div>
+		</div>
+	</section>
+
+</body>
+

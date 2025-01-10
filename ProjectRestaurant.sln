@@ -13,6 +13,14 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectRestaurant.Entity", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectRestaurant.Tools", "ProjectRestaurant.Tools\ProjectRestaurant.Tools.csproj", "{ED03D30F-4A05-4F5E-9C41-BB1ABF378E4C}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "WEB", "WEB", "{09BDBB4B-9235-43E6-A9BC-F2ACB5BBCB01}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectRestaurant.WebUI", "ProjectRestaurant.WebUI\ProjectRestaurant.WebUI.csproj", "{B59FC902-3EA6-4484-9833-A2E5D1AB51BD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectRestaurant.WebUI.Helper", "ProjectRestaurant.WebUI.Helper\ProjectRestaurant.WebUI.Helper.csproj", "{B3C1A54C-269C-48F5-97F5-050AE95CBAB1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ProjectRestaurant.WebUI.Model", "ProjectRestaurant.WebUI.Model\ProjectRestaurant.WebUI.Model.csproj", "{113E2FFD-EFE7-4F48-8146-1A3968F5A46E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,8 +47,25 @@ Global
 		{ED03D30F-4A05-4F5E-9C41-BB1ABF378E4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ED03D30F-4A05-4F5E-9C41-BB1ABF378E4C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ED03D30F-4A05-4F5E-9C41-BB1ABF378E4C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B59FC902-3EA6-4484-9833-A2E5D1AB51BD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B59FC902-3EA6-4484-9833-A2E5D1AB51BD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B59FC902-3EA6-4484-9833-A2E5D1AB51BD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B59FC902-3EA6-4484-9833-A2E5D1AB51BD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B3C1A54C-269C-48F5-97F5-050AE95CBAB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B3C1A54C-269C-48F5-97F5-050AE95CBAB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B3C1A54C-269C-48F5-97F5-050AE95CBAB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B3C1A54C-269C-48F5-97F5-050AE95CBAB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{113E2FFD-EFE7-4F48-8146-1A3968F5A46E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{113E2FFD-EFE7-4F48-8146-1A3968F5A46E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{113E2FFD-EFE7-4F48-8146-1A3968F5A46E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{113E2FFD-EFE7-4F48-8146-1A3968F5A46E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{B59FC902-3EA6-4484-9833-A2E5D1AB51BD} = {09BDBB4B-9235-43E6-A9BC-F2ACB5BBCB01}
+		{B3C1A54C-269C-48F5-97F5-050AE95CBAB1} = {09BDBB4B-9235-43E6-A9BC-F2ACB5BBCB01}
+		{113E2FFD-EFE7-4F48-8146-1A3968F5A46E} = {09BDBB4B-9235-43E6-A9BC-F2ACB5BBCB01}
 	EndGlobalSection
 EndGlobal
