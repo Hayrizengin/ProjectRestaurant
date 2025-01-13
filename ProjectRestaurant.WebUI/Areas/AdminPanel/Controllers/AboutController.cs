@@ -36,7 +36,7 @@ namespace ProjectRestaurant.WebUI.Areas.AdminPanel.Controllers
             return View(aboutViewModel);
         }
 
-        [HttpPost]
+        [HttpPost("/About/AddAbout")]
         public async Task<IActionResult> AddAbout(AboutDTORequest aboutDTORequest)
         {
             ApiRequest<AboutDTORequest> request = new()
@@ -57,7 +57,7 @@ namespace ProjectRestaurant.WebUI.Areas.AdminPanel.Controllers
             else
             {
                 ViewData["AddAboutOk"] = "Başarılı !";
-                return View("Index","About");
+                return View("/Admin/Hakkında");
             }
         }
     }

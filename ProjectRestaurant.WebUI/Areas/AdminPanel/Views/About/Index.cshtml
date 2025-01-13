@@ -1,48 +1,139 @@
 ﻿@using ProjectRestaurant.WebUI.Areas.AdminPanel.Models
 @model AboutViewModel
 @{
-	ViewData["Title"] = "Index";
-	Layout = "~/Areas/AdminPanel/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Index";
+    Layout = "~/Areas/AdminPanel/Views/Shared/_Layout.cshtml";
 }
 
+<script src="~/adminjs/about.js"></script>
 <body>
+    @foreach (var about in Model.Abouts)
+    {
+        <section class="section profile">
+            <div class="row">
+                <div class="col-xl-4">
 
-	<section class="section">
-		<div class="row">
-			<div class="col-lg-12">
+                    <div class="card">
+                        <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-				<div class="card">
-					<div class="card-body">
-						<!-- Table with stripped rows -->
-						<table class="table datatable">
-							<thead>
-								<tr>
-									<th>
-										<b>B</b>aşlık
-									</th>
-									<th>Açıklama</th>
-									<th>Resim</th>
-								</tr>
-							</thead>
-							<tbody>
-								@foreach (var about in Model.Abouts)
-								{
-									<tr>
-										<td>@about.Title</td>
-										<td>@about.Description</td>
-										<td>@about.ImageUrl</td>
-									</tr>
-								}
-							</tbody>
-						</table>
-						<!-- End Table with stripped rows -->
+                            <img src="@about.ImageUrl" alt="About" class="rounded-circle">
+                            <h2>@about.Title</h2>
+                            @*                             <div class="social-links mt-2">
+                                <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
+                                <a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
+                                <a href="#" class="instagram"><i class="bi bi-instagram"></i></a>
+                                <a href="#" class="linkedin"><i class="bi bi-linkedin"></i></a>
+                            </div> *@
+                        </div>
+                    </div>
 
-					</div>
-				</div>
+                </div>
 
-			</div>
-		</div>
-	</section>
+                <div class="col-xl-8">
 
+                    <div class="card">
+                        <div class="card-body pt-3">
+                            <!-- Bordered Tabs -->
+                            <ul class="nav nav-tabs nav-tabs-bordered">
+
+                                <li class="nav-item">
+                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#about-overview">Ön izleme</button>
+                                </li>
+
+                                <li class="nav-item">
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#about-edit">Düzenle</button>
+                                </li>
+
+                            </ul>
+                            <div class="tab-content pt-2">
+
+                                <div class="tab-pane fade show active about-overview" id="about-overview">
+                                    <h5 class="card-title">@about.Title</h5>
+                                    <p class="small fst-italic">@about.Description</p>
+                                </div>
+
+                                <div class="tab-pane fade about-edit pt-3" id="about-edit">
+                                    @using (Html.BeginForm("UpdateAbout", "About", FormMethod.Post, new { id = "updateAboutForm", enctype = "multipart/form-data" }))
+                                    {
+                                        <!-- Profile Edit Form -->
+                                        <form>
+                                            <div class="row mb-3">
+                                                <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <img src="@about.ImageUrl" height="120" width="120" id="aboutImage" alt="Profile">
+                                                    <div class="pt-2">
+                                                        <!-- Görünür button -->
+                                                        <button id="addAboutImage" class="btn btn-primary btn-sm" title="Resim Ekle">
+                                                            <i class="bi bi-upload"></i>
+                                                        </button>
+
+                                                        <!-- Gizli input -->
+                                                        <input type="file" name="ImageUrl" id="hiddenFileInput" style="display: none;">
+
+                                                        <button type="button" id="deleteAboutImage" class="btn btn-danger btn-sm" title="Resmi Kaldır"><i class="bi bi-trash"></i></button>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="Title" class="col-md-4 col-lg-3 col-form-label">Başlık</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <input name="Title" type="text" class="form-control" id="title" value="@about.Title">
+                                                </div>
+                                            </div>
+
+                                            <div class="row mb-3">
+                                                <label for="Description" class="col-md-4 col-lg-3 col-form-label">Açıklama</label>
+                                                <div class="col-md-8 col-lg-9">
+                                                    <textarea name="Description" class="form-control" id="about" style="height: 100px" value="@about.Description"> </textarea>
+                                                </div>
+                                            </div>
+
+                                            <div class="text-center">
+                                                <button type="submit" class="btn btn-primary">Kaydet</button>
+                                            </div>
+                                        </form><!-- End Profile Edit Form -->
+                                    }
+                                </div>
+
+                            </div><!-- End Bordered Tabs -->
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    }
 </body>
 
+
+<script>
+        document.getElementById("deleteAboutImage").addEventListener("click", function () {
+        const image = document.getElementById("aboutImage");
+        image.src = '/AdminUI/img/no-image-photo.png';
+    });
+
+        document.getElementById("addAboutImage").addEventListener("click", function(event) {
+        event.preventDefault();
+        // Gizli dosya seçici tetikleniyor
+        document.getElementById("hiddenFileInput").click();
+    });
+
+        document.getElementById("hiddenFileInput").addEventListener("change", function(event) {
+        const file = event.target.files[0]; // Seçilen dosya
+        const aboutImage = document.getElementById("aboutImage");
+
+        if (file) {
+            const reader = new FileReader();
+
+            reader.onload = function(e) {
+                // Resmin kaynağını ayarla
+                aboutImage.src = e.target.result;
+            };
+
+            reader.readAsDataURL(file); // Dosyayı Data URL olarak oku
+        }
+    });
+
+</script>
