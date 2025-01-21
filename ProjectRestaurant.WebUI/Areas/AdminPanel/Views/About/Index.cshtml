@@ -6,7 +6,26 @@
 }
 
 <script src="~/adminjs/about.js"></script>
+<main>
+    <div class="pagetitle d-flex justify-content-between">
+        <nav>
+            <h1>Hakkında</h1>
+            <div>
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="/Admin/Anasayfa">Anasayfa</a></li>
+                    <li class="breadcrumb-item active"><a href="/Admin/Hakkında">Hakkında</a></li>
+                </ol>
+            </div>
+        </nav>
+        <div>
+            <button type="button" id="addAbout" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#NewAbout">
+                Yeni Ekle
+            </button>
+        </div>
+    </div>
+</main>
 <body>
+
     @foreach (var about in Model.Abouts)
     {
         <section class="section profile">
@@ -16,7 +35,7 @@
                     <div class="card">
                         <div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-                            <img src="@about.ImageUrl" alt="About" class="rounded-circle">
+                            <img src="data:image/jpeg;base64,@about.ImageUrl" alt="About" class="rounded-circle">
                             <h2>@about.Title</h2>
                             @*                             <div class="social-links mt-2">
                                 <a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
@@ -33,34 +52,35 @@
 
                     <div class="card">
                         <div class="card-body pt-3">
-                            <!-- Bordered Tabs -->
+                            
                             <ul class="nav nav-tabs nav-tabs-bordered">
 
                                 <li class="nav-item">
-                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#about-overview">Ön izleme</button>
+                                    <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#about-overview{@about.Guid}">Ön izleme</button>
                                 </li>
 
                                 <li class="nav-item">
-                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#about-edit">Düzenle</button>
+                                    <button class="nav-link" data-bs-toggle="tab" data-bs-target="#about-edit{@about.Guid}">Düzenle</button>
                                 </li>
 
                             </ul>
+
                             <div class="tab-content pt-2">
 
-                                <div class="tab-pane fade show active about-overview" id="about-overview">
+                                <div class="tab-pane fade show active about-overview" id="about-overview{@about.Guid}">
                                     <h5 class="card-title">@about.Title</h5>
                                     <p class="small fst-italic">@about.Description</p>
                                 </div>
 
-                                <div class="tab-pane fade about-edit pt-3" id="about-edit">
+                                <div class="tab-pane fade about-edit pt-3" id="about-edit{@about.Guid}">
                                     @using (Html.BeginForm("UpdateAbout", "About", FormMethod.Post, new { id = "updateAboutForm", enctype = "multipart/form-data" }))
                                     {
-                                        <!-- Profile Edit Form -->
+                                        
                                         <form>
                                             <div class="row mb-3">
                                                 <label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <img src="@about.ImageUrl" height="120" width="120" id="aboutImage" alt="Profile">
+                                                    <img src="data:image/jpeg;base64,@about.ImageUrl" height="120" width="120" id="aboutImage" alt="Profile">
                                                     <div class="pt-2">
                                                         <!-- Görünür button -->
                                                         <button id="addAboutImage" class="btn btn-primary btn-sm" title="Resim Ekle">
@@ -75,6 +95,10 @@
                                                 </div>
                                             </div>
 
+                                            <!-- Gizli guid basılı -->
+                                            <input hidden="hidden" type="text" name="Guid" value="@string.Join(", ", Model.Abouts.Select(x => x.Guid))" />
+                                            <input hidden="hidden" type="text" name="Id" value="@string.Join(", ", Model.Abouts.Select(x => x.Id))" />
+
                                             <div class="row mb-3">
                                                 <label for="Title" class="col-md-4 col-lg-3 col-form-label">Başlık</label>
                                                 <div class="col-md-8 col-lg-9">
@@ -85,18 +109,20 @@
                                             <div class="row mb-3">
                                                 <label for="Description" class="col-md-4 col-lg-3 col-form-label">Açıklama</label>
                                                 <div class="col-md-8 col-lg-9">
-                                                    <textarea name="Description" class="form-control" id="about" style="height: 100px" value="@about.Description"> </textarea>
+                                                    <textarea name="Description" class="form-control" id="about" style="height: 100px">@about.Description</textarea>
                                                 </div>
                                             </div>
 
                                             <div class="text-center">
                                                 <button type="submit" class="btn btn-primary">Kaydet</button>
                                             </div>
-                                        </form><!-- End Profile Edit Form -->
+                                        </form>
+
+                                        
                                     }
                                 </div>
 
-                            </div><!-- End Bordered Tabs -->
+                            </div>
 
                         </div>
                     </div>
@@ -105,7 +131,51 @@
             </div>
         </section>
     }
+
+
+    <!-- About ekleme modalı -->
+    @using (Html.BeginForm("AddAbout", "About", FormMethod.Post, new { id = "addAboutForm", enctype = "multipart/form-data" }))
+    {
+        <div class="modal fade" id="NewAbout" tabindex="-1" style="display: none;" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Yeni ekle</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row mb-3">
+                            <label for="Title_Add" class="col-md-4 col-lg-3 col-form-label">Başlık</label>
+                            <div class="col-md-8 col-lg-9">
+                                <input name="Title" type="text" class="form-control" id="Title_Add">
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="Description_Add" class="col-md-4 col-lg-3 col-form-label">Açıklama</label>
+                            <div class="col-md-8 col-lg-9">
+                                <textarea name="Description" class="form-control" id="about" style="height: 100px" id="Description_Add"></textarea>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3">
+                            <label for="ImageUrl_Add">Fotoğraf</label>
+                            <input name="ImageUrl" style=" height: 43px;" type="file" class="form-control" rows="5" id="ImageUrl_Add" />
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                        <button type="submit" class="btn btn-primary">Ekle</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 </body>
+
+
+
+
 
 
 <script>

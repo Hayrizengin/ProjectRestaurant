@@ -93,7 +93,8 @@ namespace ProjectRestaurant.Business.Concrete
                 var error = new ErrorResult(new List<string> { $"{entity.Id}'sine sahip veri bulunamadı." });
                 return ApiResponse<bool>.FailureResult(error, HttpStatusCode.NotFound);
             }
-
+            entity.Id = specialRecipe.Id;
+            entity.Guid = specialRecipe.Guid;
             _mapper.Map(entity, specialRecipe);
 
             _uow.SpecialRecipeRepository.Update(specialRecipe);

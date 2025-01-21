@@ -17,7 +17,6 @@ namespace ProjectRestaurant.DataAccess.Mapping
             builder.ToTable("Abouts");
             builder.Property(q => q.Title).HasMaxLength(100).IsRequired();
             builder.Property(q => q.Description).HasMaxLength(800).IsRequired();
-            builder.Property(q => q.ImageUrl).HasMaxLength(200).IsRequired();
         }
     }
 }

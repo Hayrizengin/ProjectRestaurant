@@ -14,7 +14,6 @@ namespace ProjectRestaurant.WebUI.Helper.APIHelper
     {
         public async Task<ApiResponse<TResponse>> SendRequestAsync<TRequest, TResponse>(ApiRequest<TRequest> request)
         {
-
             var method = Enum.Parse<Method>(request.Method.ToString(), true);
 
             var url = "https://localhost:7238" +  request.URL;
@@ -34,6 +33,32 @@ namespace ProjectRestaurant.WebUI.Helper.APIHelper
             RestResponse restResponse = await client.ExecuteAsync(restRequest);
 
             var responseObject = JsonConvert.DeserializeObject<ApiResponse<TResponse>>(restResponse.Content);
+            responseObject.StatusCode = restResponse.StatusCode;
+            return responseObject;
+        }
+
+        //bool metotlar için
+        public async Task<ApiResponse<bool>> SendRequestBoolAsync<TRequest>(ApiRequest<TRequest> request)
+        {
+            var method = Enum.Parse<Method>(request.Method.ToString(), true);
+
+            var url = "https://localhost:7238" + request.URL;
+            var client = new RestClient(url);
+            var restRequest = new RestRequest(url,method);
+
+            if (request.Token is not null)
+            {
+                restRequest.AddHeader("Authorization","Bearer" + request.Token);
+            }
+
+            if (request.Body is not null)
+            {
+                restRequest.AddBody(request.Body,"application/json");
+            }
+
+            RestResponse restResponse = await client.ExecuteAsync(restRequest);
+
+            var responseObject = JsonConvert.DeserializeObject<ApiResponse<bool>>(restResponse.Content);
             responseObject.StatusCode = restResponse.StatusCode;
             return responseObject;
         }

@@ -10,5 +10,6 @@ namespace ProjectRestaurant.WebUI.Helper.APIHelper
     public interface IApiService
     {
         Task<ApiResponse<TResponse>> SendRequestAsync<TRequest, TResponse>(ApiRequest<TRequest> request);
+        Task<ApiResponse<bool>> SendRequestBoolAsync<TRequest>(ApiRequest<TRequest> request);
     }
 }

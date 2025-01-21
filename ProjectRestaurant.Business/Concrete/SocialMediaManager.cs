@@ -94,7 +94,8 @@ namespace ProjectRestaurant.Business.Concrete
                 var error = new ErrorResult(new List<string> { $"{entity.Id}'sine sahip veri bulunamadı."});
                 return ApiResponse<bool>.FailureResult(error,HttpStatusCode.NotFound);
             }
-
+            entity.Id = socialMedia.Id;
+            entity.Guid = socialMedia.Guid;
             _mapper.Map(entity, socialMedia);
 
             _uow.SocialMediaRepository.Update(socialMedia);

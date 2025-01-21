@@ -96,7 +96,8 @@ namespace ProjectRestaurant.Business.Concrete
                 var error = new ErrorResult(new List<string> { $"{entity.Name}' isimli yemek kategorisi bulunamadı."});
                 return ApiResponse<bool>.FailureResult(error,HttpStatusCode.NotFound);
             }
-
+            entity.Id = foodCategory.Id;
+            entity.Guid = foodCategory.Guid;
             _mapper.Map(entity,foodCategory);
 
             _uow.FoodCategoryRepository.Update(foodCategory);

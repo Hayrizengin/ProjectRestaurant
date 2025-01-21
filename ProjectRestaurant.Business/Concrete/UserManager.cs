@@ -161,7 +161,8 @@ namespace ProjectRestaurant.Business.Concrete
                 });
                 return ApiResponse<bool>.FailureResult(error,HttpStatusCode.NotFound);
             }
-
+            entity.Id = user.Id;
+            entity.Guid = user.Guid;
             _mapper.Map(entity,user);
 
             _uow.UserRepository.Update(user);

@@ -101,7 +101,8 @@ namespace ProjectRestaurant.Business.Concrete
                 var error = new ErrorResult(new List<string> { $"{entity.Title} ile ilgili veri bulunamadı." });
                 return ApiResponse<bool>.FailureResult(error,HttpStatusCode.NotFound);
             }
-
+            entity.Id = banner.Id;
+            entity.Guid = banner.Guid;
             _mapper.Map(entity, banner);
 
             _uow.BannerRepository.Update(banner);

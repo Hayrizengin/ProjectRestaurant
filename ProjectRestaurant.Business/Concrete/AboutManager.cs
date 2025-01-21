@@ -130,7 +130,8 @@ namespace ProjectRestaurant.Business.Concrete
                 var error = new ErrorResult(new List<string> { "Güncellenecek veri bulunamadı" });
                 return ApiResponse<bool>.FailureResult(error, HttpStatusCode.NotFound);
             }
-
+            entity.Id = about.Id; // guidden güncellendiği zaman id 0 gidince hata veriyor primary key olduğu için bu çözümü yaptık
+            entity.Guid = about.Guid;
             // dto'yu mevcut veri nesnesine haritala
             _mapper.Map(entity, about);
 

@@ -102,7 +102,8 @@ namespace ProjectRestaurant.Business.Concrete
                 var error = new ErrorResult(new List<string> { $"{entity.Email} ile ilgili veri bulunamadı." });
                 return ApiResponse<bool>.FailureResult(error, HttpStatusCode.NotFound);
             }
-
+            entity.Id = message.Id;
+            entity.Guid = message.Guid;
             _mapper.Map(entity, message);
 
             _uow.MessageRepository.Update(message);
