@@ -40,15 +40,15 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<BannerDTOResponse>.SuccessResult(bannerResponse);
         }
 
-        public async Task<ApiResponse<bool>> DeleteAsync(int id)
+        public async Task<ApiResponse<bool>> DeleteAsync(BannerDTOUpdateRequest bannerDTOUpdateRequest)
         {
-            var banner = await _uow.BannerRepository.GetAsync(x=>x.Id == id);
+            var banner = await _uow.BannerRepository.GetAsync(x=>x.Id == bannerDTOUpdateRequest.Id);
 
             if (banner is null)
             {
                 var error = new ErrorResult(new List<string>
                 {
-                    $"{id}'li veri bulunamadı."
+                    $"{bannerDTOUpdateRequest.Id}'li veri bulunamadı."
                 });
                 return ApiResponse<bool>.FailureResult(error,HttpStatusCode.NotFound);
             }
@@ -95,6 +95,9 @@ namespace ProjectRestaurant.Business.Concrete
         public async Task<ApiResponse<bool>> UpdateAsync(BannerDTOUpdateRequest entity)
         {
             var banner = await _uow.BannerRepository.GetAsync(x=>x.Id == entity.Id && x.IsActive == true && x.IsDeleted == false);
+
+            if (entity.ImageUrl is null && banner.ImageUrl is not null)
+                entity.ImageUrl = banner.ImageUrl;
 
             if (banner is null)
             {

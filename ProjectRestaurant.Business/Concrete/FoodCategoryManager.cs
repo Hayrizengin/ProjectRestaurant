@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using ProjectRestaurant.Business.Abstract;
 using ProjectRestaurant.DataAccess.Abstract.DataManagement;
+using ProjectRestaurant.Entity.DTO.ContactDTO;
 using ProjectRestaurant.Entity.DTO.FoodCategoryDTO;
 using ProjectRestaurant.Entity.Poco;
 using ProjectRestaurant.Tools.Response;
@@ -39,13 +40,13 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<FoodCategoryDTOResponse>.SuccessResult(foodCategoryResponse);
         }
 
-        public async Task<ApiResponse<bool>> DeleteAsync(int id)
+        public async Task<ApiResponse<bool>> DeleteAsync(FoodCategoryDTOUpdateRequest foodCategoryDTOUpdateRequest)
         {
-            var foodCategory = await _uow.FoodCategoryRepository.GetAsync(x=>x.Id == id && x.IsActive == true && x.IsDeleted == false);
+            var foodCategory = await _uow.FoodCategoryRepository.GetAsync(x=>x.Id == foodCategoryDTOUpdateRequest.Id && x.IsActive == true && x.IsDeleted == false);
 
             if (foodCategory is null)
             {
-                var error = new ErrorResult(new List<string> { $"{id}'sine sahip veri bulunamadı."});
+                var error = new ErrorResult(new List<string> { $"{foodCategoryDTOUpdateRequest.Id}'sine sahip veri bulunamadı."});
                 return ApiResponse<bool>.FailureResult(error,HttpStatusCode.NotFound);
             }
 

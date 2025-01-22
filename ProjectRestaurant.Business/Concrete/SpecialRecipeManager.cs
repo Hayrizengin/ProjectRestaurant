@@ -37,13 +37,13 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<SpecialRecipeDTOResponse>.SuccessResult(specialRecipeDTOResponse);
         }
 
-        public async Task<ApiResponse<bool>> DeleteAsync(int id)
+        public async Task<ApiResponse<bool>> DeleteAsync(SpecialRecipeDTOUpdateRequest specialRecipeDTOUpdateRequest)
         {
-            var specialRecipe = await _uow.SpecialRecipeRepository.GetAsync(x=>x.Id == id && x.IsActive == true && x.IsDeleted == false);
+            var specialRecipe = await _uow.SpecialRecipeRepository.GetAsync(x=>x.Id == specialRecipeDTOUpdateRequest.Id && x.IsActive == true && x.IsDeleted == false);
 
             if (specialRecipe is null)
             {
-                var error = new ErrorResult(new List<string>{ $"{id}'sine sahip veri bulunamadı."});
+                var error = new ErrorResult(new List<string>{ $"{specialRecipeDTOUpdateRequest.Id}'sine sahip veri bulunamadı."});
                 return ApiResponse<bool>.FailureResult(error,HttpStatusCode.NotFound);
             }
 
@@ -87,6 +87,9 @@ namespace ProjectRestaurant.Business.Concrete
         public async Task<ApiResponse<bool>> UpdateAsync(SpecialRecipeDTOUpdateRequest entity)
         {
             var specialRecipe = await _uow.SpecialRecipeRepository.GetAsync(x => x.Id == entity.Id && x.IsActive == true && x.IsDeleted == false);
+
+            if (entity.ImageUrl is null && specialRecipe.ImageUrl is not null)
+                entity.ImageUrl = specialRecipe.ImageUrl;
 
             if (specialRecipe is null)
             {

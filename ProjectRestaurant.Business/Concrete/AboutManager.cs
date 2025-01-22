@@ -57,10 +57,10 @@ namespace ProjectRestaurant.Business.Concrete
         /// <param name="id">Silinecek nesnenin id'si</param>
         /// <returns>Silme işleminin sonucu</returns>
         /// <exception cref="NotImplementedException"></exception>
-        public async Task<ApiResponse<bool>> DeleteAsync(int id)
+        public async Task<ApiResponse<bool>> DeleteAsync(AboutDTOUpdateRequest aboutDTOUpdateRequest)
         {
             // id ile bul
-            var about = await _uow.AboutRepository.GetAsync(a => a.Id == id); // bu kısımda şuan interfaceden int id alıyor ama guid'e görede işlem yapabilmemiz lazım gelen veriyi değiştireceğiz.
+            var about = await _uow.AboutRepository.GetAsync(a => a.Id == aboutDTOUpdateRequest.Id); // bu kısımda şuan interfaceden int id alıyor ama guid'e görede işlem yapabilmemiz lazım gelen veriyi değiştireceğiz.
 
             //about boş ise hata döndür.
             if (about == null)
@@ -123,6 +123,10 @@ namespace ProjectRestaurant.Business.Concrete
 
             // veriyi bul
             var about = await _uow.AboutRepository.GetAsync(x=>x.Guid == entity.Guid || x.Id == entity.Id);
+
+            if (entity.ImageUrl is null && about.ImageUrl is not null)
+                entity.ImageUrl = about.ImageUrl;
+            
 
             //veri yoksa hata döndür
             if (about is null)

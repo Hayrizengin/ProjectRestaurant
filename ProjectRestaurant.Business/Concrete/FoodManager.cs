@@ -37,13 +37,13 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<FoodDTOResponse>.SuccessResult(foodResponse);
         }
 
-        public async Task<ApiResponse<bool>> DeleteAsync(int id)
+        public async Task<ApiResponse<bool>> DeleteAsync(FoodDTOUpdateRequest foodDTOUpdateRequest)
         {
-            var food = await _uow.FoodRepository.GetAsync(x=>x.Id == id && x.IsActive == true && x.IsDeleted == false,"FoodCategory");
+            var food = await _uow.FoodRepository.GetAsync(x=>x.Id == foodDTOUpdateRequest.Id && x.IsActive == true && x.IsDeleted == false,"FoodCategory");
 
             if (food is null)
             {
-                var error = new ErrorResult(new List<string> { $"{id}'sine sahip ürün bulunamadı." });
+                var error = new ErrorResult(new List<string> { $"{foodDTOUpdateRequest.Id}'sine sahip ürün bulunamadı." });
                 return ApiResponse<bool>.FailureResult(error,HttpStatusCode.NotFound);
             }
 
@@ -88,6 +88,9 @@ namespace ProjectRestaurant.Business.Concrete
         public async Task<ApiResponse<bool>> UpdateAsync(FoodDTOUpdateRequest entity)
         {
             var food = await _uow.FoodRepository.GetAsync(x=>x.Id == entity.Id && x.IsActive == true && x.IsDeleted == false,"FoodCategory");
+
+            if (entity.ImageUrl is null && food.ImageUrl is not null)
+                entity.ImageUrl = food.ImageUrl;
 
             if (food is null)
             {

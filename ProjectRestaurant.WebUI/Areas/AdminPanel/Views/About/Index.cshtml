@@ -124,6 +124,16 @@
 
                             </div>
 
+                            <div class="d-inline-block float-end">
+                                @using (Html.BeginForm("DeleteAbout", "About", FormMethod.Post, new { id = "deleteAboutForm", enctype = "multipart/form-data" }))
+                                {
+                                    <button type="submit" class="btn btn-sm btn-danger">
+                                        <i class="fas fa-trash"></i> Sil
+                                        <input hidden="hidden" name="Id" value="@about.Id" />
+                                    </button>
+                                }
+                            </div>
+
                         </div>
                     </div>
 

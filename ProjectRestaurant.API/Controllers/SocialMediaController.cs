@@ -45,9 +45,9 @@ namespace ProjectRestaurant.API.Controllers
         }
 
         [HttpPost("DeleteSocialMedia")]
-        public async Task<IActionResult> DeleteSocialMedia(int id)
+        public async Task<IActionResult> DeleteSocialMedia(SocialMediaDTOUpdateRequest socialMediaDTOUpdateRequest)
         {
-            var result = await _socialMediaService.DeleteAsync(id);
+            var result = await _socialMediaService.DeleteAsync(socialMediaDTOUpdateRequest);
             return Ok(result);
         }
     }

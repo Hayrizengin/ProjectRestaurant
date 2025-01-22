@@ -45,9 +45,9 @@ namespace ProjectRestaurant.API.Controllers
         }
 
         [HttpPost("DeleteFoodCategory")]
-        public async Task<IActionResult> DeleteFoodCategory(int id)
+        public async Task<IActionResult> DeleteFoodCategory(FoodCategoryDTOUpdateRequest foodCategoryDTOUpdateRequest)
         {
-            var result = await _foodCategoryService.DeleteAsync(id);
+            var result = await _foodCategoryService.DeleteAsync(foodCategoryDTOUpdateRequest);
             return Ok(result);
         }
     }

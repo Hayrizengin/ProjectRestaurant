@@ -41,15 +41,15 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<MessageDTOResponse>.SuccessResult(messageResponse);
         }
 
-        public async Task<ApiResponse<bool>> DeleteAsync(int id)
+        public async Task<ApiResponse<bool>> DeleteAsync(MessageDTOUpdateRequest messageDTOUpdateRequest)
         {
-            var message = await _uow.MessageRepository.GetAsync(x => x.Id == id);
+            var message = await _uow.MessageRepository.GetAsync(x => x.Id == messageDTOUpdateRequest.Id);
 
             if (message is null)
             {
                 var error = new ErrorResult(new List<string>
                 {
-                    $"{id}'li veri bulunamadı."
+                    $"{messageDTOUpdateRequest.Id}'li veri bulunamadı."
                 });
                 return ApiResponse<bool>.FailureResult(error, HttpStatusCode.NotFound);
             }

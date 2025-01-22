@@ -38,13 +38,13 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<ContactDTOResponse>.SuccessResult(contactResponse);
         }
 
-        public async Task<ApiResponse<bool>> DeleteAsync(int id)
+        public async Task<ApiResponse<bool>> DeleteAsync(ContactDTOUpdateRequest contactDTOUpdateRequest)
         {
-            var contact = await _uow.ContactRepository.GetAsync(x=>x.Id == id && x.IsActive == true && x.IsDeleted == false);
+            var contact = await _uow.ContactRepository.GetAsync(x=>x.Id == contactDTOUpdateRequest.Id && x.IsActive == true && x.IsDeleted == false);
 
             if (contact is null)
             {
-                var error = new ErrorResult(new List<string> { $"{id}'li veri bulunamadı" });
+                var error = new ErrorResult(new List<string> { $"{contactDTOUpdateRequest.Id}'li veri bulunamadı" });
                 return ApiResponse<bool>.FailureResult(error,HttpStatusCode.NotFound);
             }
 

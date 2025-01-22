@@ -39,13 +39,13 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<SocialMediaDTOResponse>.SuccessResult(socialMediaResponse);
         }
 
-        public async Task<ApiResponse<bool>> DeleteAsync(int id)
+        public async Task<ApiResponse<bool>> DeleteAsync(SocialMediaDTOUpdateRequest socialMediaDTOUpdateRequest)
         {
-            var socialMedia = await _uow.SocialMediaRepository.GetAsync(x=>x.Id == id && x.IsActive == true && x.IsDeleted == false);
+            var socialMedia = await _uow.SocialMediaRepository.GetAsync(x=>x.Id == socialMediaDTOUpdateRequest.Id && x.IsActive == true && x.IsDeleted == false);
 
             if (socialMedia is null)
             {
-                var error = new ErrorResult(new List<string>{ $"{id}'sine sahip veri bulunamadı" });
+                var error = new ErrorResult(new List<string>{ $"{socialMediaDTOUpdateRequest.Id}'sine sahip veri bulunamadı" });
                 return ApiResponse<bool>.FailureResult(error,HttpStatusCode.NotFound);
             }
 
@@ -88,6 +88,9 @@ namespace ProjectRestaurant.Business.Concrete
         public async Task<ApiResponse<bool>> UpdateAsync(SocialMediaDTOUpdateRequest entity)
         {
             var socialMedia = await _uow.SocialMediaRepository.GetAsync(x=>x.Id == entity.Id && x.IsActive == true && x.IsDeleted == false);
+
+            if (entity.Icon is null && socialMedia.Icon is not null)
+                entity.Icon = socialMedia.Icon;
 
             if (socialMedia is null)
             {

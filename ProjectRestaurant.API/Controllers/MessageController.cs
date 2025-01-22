@@ -45,9 +45,9 @@ namespace ProjectRestaurant.API.Controllers
         }
 
         [HttpPost("DeleteMessage")]
-        public async Task<IActionResult> DeleteMessage(int id)
+        public async Task<IActionResult> DeleteMessage(MessageDTOUpdateRequest messageDTOUpdateRequest)
         {
-            var result = await _messageService.DeleteAsync(id);
+            var result = await _messageService.DeleteAsync(messageDTOUpdateRequest);
             return Ok(result);
         }
     }

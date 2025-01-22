@@ -45,9 +45,9 @@ namespace ProjectRestaurant.API.Controllers
         }
 
         [HttpPost("DeleteSpecialRecipe")]
-        public async Task<IActionResult> DeleteSpecialRecipe(int id)
+        public async Task<IActionResult> DeleteSpecialRecipe(SpecialRecipeDTOUpdateRequest specialRecipeDTOUpdateRequest)
         {
-            var result = await _specialRecipeService.DeleteAsync(id);
+            var result = await _specialRecipeService.DeleteAsync(specialRecipeDTOUpdateRequest);
             return Ok(result);
         }
     }

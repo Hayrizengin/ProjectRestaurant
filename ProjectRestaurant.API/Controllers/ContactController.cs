@@ -45,9 +45,9 @@ namespace ProjectRestaurant.API.Controllers
         }
 
         [HttpPost("DeleteContact")]
-        public async Task<IActionResult> DeleteContact(int id)
+        public async Task<IActionResult> DeleteContact(ContactDTOUpdateRequest contactDTOUpdateRequest)
         {
-            var result = await _contactService.DeleteAsync(id);
+            var result = await _contactService.DeleteAsync(contactDTOUpdateRequest);
             return Ok(result);
         }
     }

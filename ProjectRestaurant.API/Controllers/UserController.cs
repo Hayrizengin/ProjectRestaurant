@@ -49,9 +49,9 @@ namespace ProjectRestaurant.API.Controllers
         }
 
         [HttpPost("DeleteUser")]
-        public async Task<IActionResult> DeleteUser(int id)
+        public async Task<IActionResult> DeleteUser(UserDTOUpdateRequest userDTOUpdateRequest)
         {
-            var result = await _userService.DeleteAsync(id);
+            var result = await _userService.DeleteAsync(userDTOUpdateRequest);
             return Ok(result);
         }
 

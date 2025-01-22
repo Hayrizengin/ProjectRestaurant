@@ -45,9 +45,9 @@ namespace ProjectRestaurant.API.Controllers
         }
 
         [HttpPost("DeleteBanner")]
-        public async Task<IActionResult> DeleteBanner(int id)
+        public async Task<IActionResult> DeleteBanner(BannerDTOUpdateRequest bannerDTOUpdateRequest)
         {
-            var result = await _bannerService.DeleteAsync(id);
+            var result = await _bannerService.DeleteAsync(bannerDTOUpdateRequest);
             return Ok(result);
         }
     }

@@ -51,9 +51,9 @@ namespace ProjectRestaurant.Business.Concrete
             return ApiResponse<UserDTOResponse>.SuccessResult(userResponse);
         }
 
-        public async Task<ApiResponse<bool>> DeleteAsync(int id)
+        public async Task<ApiResponse<bool>> DeleteAsync(UserDTOUpdateRequest userDTOUpdateRequest)
         {
-            var user = await _uow.UserRepository.GetAsync(x=>x.Id == id);
+            var user = await _uow.UserRepository.GetAsync(x=>x.Id == userDTOUpdateRequest.Id);
 
             if (user == null)
             {
@@ -152,6 +152,9 @@ namespace ProjectRestaurant.Business.Concrete
             await _validator.ValidateAsync(entity,typeof(UserUpdateValidator));
 
             var user = await _uow.UserRepository.GetAsync(x=>x.Id == entity.Id || x.Guid == entity.Guid);
+
+            if (entity.ImageUrl is null && user.ImageUrl is not null)
+                entity.ImageUrl = user.ImageUrl;
 
             if (user is null)
             {
