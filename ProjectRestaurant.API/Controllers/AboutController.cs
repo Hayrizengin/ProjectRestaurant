@@ -51,6 +51,5 @@ namespace ProjectRestaurant.API.Controllers
             var result = await _aboutService.DeleteAsync(aboutDTOUpdateRequest);
             return Ok(result);
         }
-
     }
 }

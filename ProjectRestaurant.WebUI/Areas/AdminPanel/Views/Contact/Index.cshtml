@@ -1,0 +1,79 @@
+﻿@using ProjectRestaurant.WebUI.Areas.AdminPanel.Models
+@model ContactViewModel
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Areas/AdminPanel/Views/Shared/_Layout.cshtml";
+}
+<main>
+	<div class="pagetitle d-flex justify-content-between">
+		<nav>
+			<h1>İletişim Kısmı</h1>
+			<div>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/Admin/Anasayfa">Anasayfa</a></li>
+					<li class="breadcrumb-item active"><a href="/Admin/Contact">İletişim</a></li>
+				</ol>
+			</div>
+		</nav>
+	</div>
+</main>
+<body>
+	@foreach (var contact in Model.Contacts)
+	{
+		<div class="card-body">
+			@using (Html.BeginForm("UpdateContact", "Contact", FormMethod.Post, new { id = $"updateContactForm{contact.Guid}", enctype = "multipart/form-data" }))
+			{
+				<form>
+					<div class="row mb-3">
+
+						<input type="hidden" id="Guid-@contact.Guid" name="Guid" value="@contact.Guid" />
+						<input hidden="hidden" type="text" id="Id-@contact.Id" name="Id" value="@contact.Id" />
+
+
+						<label class="col-sm-2 col-form-label">Telefon</label>
+						<div class="col-sm-10">
+							<div class="form-floating mb-3">
+								<input type="tel" name="Phone" class="form-control" id="phoneInput"
+									   placeholder="05419178596"
+									   pattern="05[0-9]{9}"
+									   title="Telefon numarası 05 ile başlayıp 11 haneli olmalıdır."
+									   value="@contact.Phone">
+								<label for="phoneInput">Telefon Numarası</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label for="Email" class="col-sm-2 col-form-label">Email</label>
+						<div class="col-sm-10">
+							<div class="form-floating mb-3">
+								<input type="email" name="Email" class="form-control" id="emailInput"
+									   placeholder="name@example.com"
+									   value="@contact.Email">
+								<label for="emailInput">Email Adresi</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="row mb-3">
+						<label class="col-sm-2 col-form-label">Adres</label>
+						<div class="col-sm-10">
+							<div class="form-floating mb-3">
+								<textarea class="form-control" name="Address" id="addressTextarea"
+										  placeholder="Adres" style="height: 100px;">@contact.Address</textarea>
+								<label for="addressTextarea">Adres</label>
+							</div>
+						</div>
+					</div>
+
+					<div class="row mb-3" style="display: flex; justify-content: flex-end;">
+						<div class="col-sm-10" style="flex: 0;">
+							<button type="submit" class="btn btn-success">Kaydet</button>
+						</div>
+					</div>
+				</form>
+			}
+		</div>
+	}
+</body>
+

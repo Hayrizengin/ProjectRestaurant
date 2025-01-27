@@ -1,19 +1,18 @@
 ﻿@using ProjectRestaurant.WebUI.Areas.AdminPanel.Models
-@model AboutViewModel
+@model BannerViewModel
 @{
 	ViewData["Title"] = "Index";
 	Layout = "~/Areas/AdminPanel/Views/Shared/_Layout.cshtml";
 }
-<link href="~/adminjs/aboutswitchbutton.css" rel="stylesheet" />
-<script src="~/adminjs/about.js"></script>
+
 <main>
 	<div class="pagetitle d-flex justify-content-between">
 		<nav>
-			<h1>Hakkında</h1>
+			<h1>Giriş Banner</h1>
 			<div>
 				<ol class="breadcrumb">
 					<li class="breadcrumb-item"><a href="/Admin/Anasayfa">Anasayfa</a></li>
-					<li class="breadcrumb-item active"><a href="/Admin/Hakkında">Hakkında</a></li>
+					<li class="breadcrumb-item active"><a href="/Admin/Banner">Banner</a></li>
 				</ol>
 			</div>
 		</nav>
@@ -29,16 +28,16 @@
 				</li>
 			</ul>
 		</div> *@
-@* 		<div>
-			<button type="button" id="addAbout" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#NewAbout">
+		<div>
+			<button type="button" id="addBanner" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#NewBanner">
 				Yeni Ekle
 			</button>
-		</div> *@
+		</div>
 	</div>
 </main>
 <body>
 
-	@foreach (var about in Model.Abouts)
+	@foreach (var banner in Model.Banners)
 	{
 		<section class="section profile">
 			<div class="row">
@@ -47,8 +46,8 @@
 					<div class="card">
 						<div class="card-body profile-card pt-4 d-flex flex-column align-items-center">
 
-							<img src="data:image/jpeg;base64,@about.ImageUrl" alt="about" class="rounded-circle">
-							<h2>@about.Title</h2>
+							<img src="data:image/jpeg;base64,@banner.ImageUrl" alt="Banner" class="rounded-circle">
+							<h2>@banner.Title</h2>
 							@* 							<div class="social-links mt-2">
 								<a href="#" class="twitter"><i class="bi bi-twitter"></i></a>
 								<a href="#" class="facebook"><i class="bi bi-facebook"></i></a>
@@ -68,60 +67,60 @@
 							<ul class="nav nav-tabs nav-tabs-bordered">
 
 								<li class="nav-item">
-									<button class="nav-link active" data-bs-toggle="tab" data-bs-target="#about-overview-@about.Guid">Ön izleme</button>
+									<button class="nav-link active" data-bs-toggle="tab" data-bs-target="#banner-overview-@banner.Guid">Ön izleme</button>
 								</li>
 
 								<li class="nav-item">
-									<button class="nav-link" data-bs-toggle="tab" data-bs-target="#about-edit-@about.Guid">Düzenle</button>
+									<button class="nav-link" data-bs-toggle="tab" data-bs-target="#banner-edit-@banner.Guid">Düzenle</button>
 								</li>
 
 							</ul>
 
 							<div class="tab-content pt-2">
 
-								<div class="tab-pane fade show active about-overview" id="about-overview-@about.Guid">
-									<h5 class="card-title">@about.Title</h5>
-									<p class="small fst-italic">@about.Description</p>
+								<div class="tab-pane fade show active banner-overview" id="banner-overview-@banner.Guid">
+									<h5 class="card-title">@banner.Title</h5>
+									<p class="small fst-italic">@banner.Description</p>
 								</div>
 
-								<div class="tab-pane fade about-edit pt-3" id="about-edit-@about.Guid">
-									@using (Html.BeginForm("UpdateAbout", "About", FormMethod.Post, new { id = $"updateAboutForm{about.Guid}", enctype = "multipart/form-data" }))
+								<div class="tab-pane fade banner-edit pt-3" id="banner-edit-@banner.Guid">
+									@using (Html.BeginForm("UpdateBanner", "Banner", FormMethod.Post, new { id = $"updateBannerForm{banner.Guid}", enctype = "multipart/form-data" }))
 									{
 
 										<form>
 											<div class="row mb-3">
 												<label for="profileImage" class="col-md-4 col-lg-3 col-form-label">Profile Image</label>
 												<div class="col-md-8 col-lg-9">
-													<img src="data:image/jpeg;base64,@about.ImageUrl" height="120" width="120" id="aboutImage" alt="Profile">
+													<img src="data:image/jpeg;base64,@banner.ImageUrl" height="120" width="120" id="bannerImage" alt="Profile">
 													<div class="pt-2">
 														<!-- Görünür button -->
-														<button id="addAboutImage" class="btn btn-primary btn-sm" title="Resim Ekle">
+														<button id="addBannerImage" class="btn btn-primary btn-sm" title="Resim Ekle">
 															<i class="bi bi-upload"></i>
 														</button>
 
 														<!-- Gizli input -->
 														<input type="file" name="ImageUrl" id="hiddenFileInput" style="display: none;">
 
-														<button type="button" id="deleteAboutImage" class="btn btn-danger btn-sm" title="Resmi Kaldır"><i class="bi bi-trash"></i></button>
+														<button type="button" id="deleteBannerImage" class="btn btn-danger btn-sm" title="Resmi Kaldır"><i class="bi bi-trash"></i></button>
 													</div>
 												</div>
 											</div>
 
 											<!-- Gizli guid basılı -->
-											<input hidden="hidden" type="text" id="Guid-@about.Guid" name="Guid" value="@about.Guid" />
-											<input hidden="hidden" type="text" id="Id-@about.Id" name="Id" value="@about.Id" />
+											<input hidden="hidden" type="text" id="Guid-@banner.Guid" name="Guid" value="@banner.Guid" />
+											<input hidden="hidden" type="text" id="Id-@banner.Id" name="Id" value="@banner.Id" />
 
 											<div class="row mb-3">
 												<label for="Title" class="col-md-4 col-lg-3 col-form-label">Başlık</label>
 												<div class="col-md-8 col-lg-9">
-													<input name="Title" type="text" class="form-control" id="title" value="@about.Title">
+													<input name="Title" type="text" class="form-control" id="title" value="@banner.Title">
 												</div>
 											</div>
 
 											<div class="row mb-3">
 												<label for="Description" class="col-md-4 col-lg-3 col-form-label">Açıklama</label>
 												<div class="col-md-8 col-lg-9">
-													<textarea name="Description" class="form-control" id="about" style="height: 100px">@about.Description</textarea>
+													<textarea name="Description" class="form-control" id="about" style="height: 100px">@banner.Description</textarea>
 												</div>
 											</div>
 
@@ -137,11 +136,11 @@
 							</div>
 
 							<div class="d-inline-block float-end">
-								@using (Html.BeginForm("DeleteAbout", "About", FormMethod.Post, new { id = "deleteAboutForm", enctype = "multipart/form-data" }))
+								@using (Html.BeginForm("DeleteBanner", "Banner", FormMethod.Post, new { id = "deleteBannerForm", enctype = "multipart/form-data" }))
 								{
 									<button type="submit" class="btn btn-sm btn-danger">
 										<i class="fas fa-trash"></i> Sil
-										<input hidden="hidden" name="Id" value="@about.Id" />
+										<input hidden="hidden" name="Id" value="@banner.Id" />
 									</button>
 								}
 							</div>
@@ -156,9 +155,9 @@
 
 
 	<!-- About ekleme modalı -->
-	@using (Html.BeginForm("AddAbout", "About", FormMethod.Post, new { id = "addAboutForm", enctype = "multipart/form-data" }))
+	@using (Html.BeginForm("AddBanner", "Banner", FormMethod.Post, new { id = "addBannerForm", enctype = "multipart/form-data" }))
 	{
-		<div class="modal fade" id="NewAbout" tabindex="-1" style="display: none;" aria-hidden="true">
+		<div class="modal fade" id="NewBanner" tabindex="-1" style="display: none;" aria-hidden="true">
 			<div class="modal-dialog">
 				<div class="modal-content">
 					<div class="modal-header">
@@ -196,12 +195,12 @@
 </body>
 
 <script>
-		document.getElementById("deleteAboutImage").addEventListener("click", function () {
-		const image = document.getElementById("aboutImage");
+		document.getElementById("deleteBannerImage").addEventListener("click", function () {
+		const image = document.getElementById("bannerImage");
 		image.src = '/AdminUI/img/no-image-photo.png';
 	});
 
-		document.getElementById("addAboutImage").addEventListener("click", function(event) {
+		document.getElementById("addBannerImage").addEventListener("click", function(event) {
 		event.preventDefault();
 		// Gizli dosya seçici tetikleniyor
 		document.getElementById("hiddenFileInput").click();
@@ -209,14 +208,14 @@
 
 		document.getElementById("hiddenFileInput").addEventListener("change", function(event) {
 		const file = event.target.files[0]; // Seçilen dosya
-		const aboutImage = document.getElementById("aboutImage");
+		const bannerImage = document.getElementById("bannerImage");
 
 		if (file) {
 			const reader = new FileReader();
 
 			reader.onload = function(e) {
 				// Resmin kaynağını ayarla
-				aboutImage.src = e.target.result;
+				bannerImage.src = e.target.result;
 			};
 
 			reader.readAsDataURL(file); // Dosyayı Data URL olarak oku
@@ -224,3 +223,4 @@
 	});
 
 </script>
+

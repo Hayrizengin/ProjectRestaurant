@@ -17,7 +17,6 @@ namespace ProjectRestaurant.DataAccess.Mapping
             builder.ToTable("Foods");
             builder.Property(q => q.Name).HasMaxLength(100).IsRequired();
             builder.Property(q => q.Price).HasMaxLength(10).IsRequired();
-            builder.Property(q => q.ImageUrl).HasMaxLength(200).IsRequired();
             builder.HasOne(q => q.FoodCategory).WithMany(q => q.Foods).HasForeignKey(q => q.FoodCategoryId).OnDelete(DeleteBehavior.Cascade);
         }
     }

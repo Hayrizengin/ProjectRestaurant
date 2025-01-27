@@ -15,7 +15,6 @@ namespace ProjectRestaurant.DataAccess.Mapping
         public override void Configure(EntityTypeBuilder<SocialMedia> builder)
         {
             builder.ToTable("SocialMedias");
-            builder.Property(q => q.Icon).HasMaxLength(200).IsRequired();
             builder.Property(q => q.Url).HasMaxLength(150).IsRequired();
 
         }

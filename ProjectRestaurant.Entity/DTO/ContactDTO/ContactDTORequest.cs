@@ -8,8 +8,8 @@ namespace ProjectRestaurant.Entity.DTO.ContactDTO
 {
     public class ContactDTORequest
     {
-        public string Address { get; set; }
-        public string Phone { get; set; }
-        public string Email { get; set; }
+        public string Address { get; set; } = "string";
+        public string Phone { get; set; } = "string";
+        public string Email { get; set; } = "string";
     }
 }

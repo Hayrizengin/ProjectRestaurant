@@ -85,7 +85,7 @@ namespace ProjectRestaurant.Business.Concrete
         public async Task<ApiResponse<IEnumerable<AboutDTOResponse>>> GetAllAsync(AboutDTORequest entity)
         {
             // tüm verileri al
-            var abouts = await _uow.AboutRepository.GetAllAsync(x=>x.IsActive == true && x.IsDeleted==false);
+            var abouts = await _uow.AboutRepository.GetAllAsync(x=>x.IsDeleted==false && x.IsActive==true);
 
             //eğer veri yoksa hata döndür
             if (!abouts.Any())

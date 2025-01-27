@@ -2,6 +2,7 @@
 using ProjectRestaurant.Entity.DTO.AboutDTO;
 using ProjectRestaurant.WebUI.Areas.AdminPanel.Models;
 using ProjectRestaurant.WebUI.Helper.APIHelper;
+using ProjectRestaurant.WebUI.Helper.Response;
 using ProjectRestaurant.WebUI.Helper.SessionHelper;
 using ProjectRestaurant.WebUI.Model.DTO.About;
 using ProjectRestaurant.WebUI.Model.DTO.User;
@@ -71,7 +72,7 @@ namespace ProjectRestaurant.WebUI.Areas.AdminPanel.Controllers
             }
             else
             {
-                ViewData["AddAboutSuccess"] = "Başarılı !";
+                ViewData["AddAboutSuccess"] = response.Message;
                 return RedirectToAction("Index", "About");
             }
         }
@@ -109,7 +110,7 @@ namespace ProjectRestaurant.WebUI.Areas.AdminPanel.Controllers
             }
             else
             {
-                ViewData["UpdateAboutSuccess"] = "Başarılı !";
+                ViewData["UpdateAboutSuccess"] = response.Message;
                 return RedirectToAction("Index","About");
             }
         }
@@ -133,7 +134,7 @@ namespace ProjectRestaurant.WebUI.Areas.AdminPanel.Controllers
             }
             else
             {
-                ViewData["DeleteAboutSuccess"] = "Başarılı !";
+                ViewData["DeleteAboutSuccess"] = response.Message;
                 return RedirectToAction("Index","About");
             }
         }

@@ -94,7 +94,7 @@ namespace ProjectRestaurant.Business.Concrete
 
         public async Task<ApiResponse<bool>> UpdateAsync(BannerDTOUpdateRequest entity)
         {
-            var banner = await _uow.BannerRepository.GetAsync(x=>x.Id == entity.Id && x.IsActive == true && x.IsDeleted == false);
+            var banner = await _uow.BannerRepository.GetAsync(x=>x.Id == entity.Id || x.Guid == entity.Guid);
 
             if (entity.ImageUrl is null && banner.ImageUrl is not null)
                 entity.ImageUrl = banner.ImageUrl;
