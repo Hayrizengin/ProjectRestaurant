@@ -8,6 +8,6 @@ namespace ProjectRestaurant.Entity.DTO.FoodCategoryDTO
 {
     public class FoodCategoryDTORequest
     {
-        public string Name { get; set; }
+        public string Name { get; set; } = "string";
     }
 }

@@ -64,7 +64,7 @@ namespace ProjectRestaurant.Business.Concrete
 
         public async Task<ApiResponse<IEnumerable<MessageDTOResponse>>> GetAllAsync(MessageDTORequest? entity)
         {
-            var messages = await _uow.MessageRepository.GetAllAsync(x => x.IsActive == true && x.IsDeleted == false);
+            var messages = await _uow.MessageRepository.GetAllAsync(x => x.IsDeleted == false && x.IsActive == entity.IsActive);
 
             if (!messages.Any())
             {
@@ -111,6 +111,25 @@ namespace ProjectRestaurant.Business.Concrete
 
             return ApiResponse<bool>.SuccessResult(true);
 
+        }
+
+        public async Task<ApiResponse<MessageDTOResponse>> ReadMessage(MessageDTOUpdateRequest messageDTOUpdateRequest)
+        {
+            var message = await _uow.MessageRepository.GetAsync(x=>x.Id == messageDTOUpdateRequest.Id || x.Guid == messageDTOUpdateRequest.Guid);
+            if (message is null)
+            {
+                var error = new ErrorResult(new List<string> { $"Mesaj bulunamadı." });
+                return ApiResponse<MessageDTOResponse>.FailureResult(error, HttpStatusCode.NotFound);
+            }
+
+            message.IsActive = false;
+
+            _uow.MessageRepository.Update(message);
+            await _uow.SaveChangeAsync();
+
+            var responseMessage = _mapper.Map<MessageDTOResponse>(message);
+
+            return ApiResponse<MessageDTOResponse>.SuccessResult(responseMessage);
         }
     }
 }

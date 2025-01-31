@@ -8,11 +8,12 @@ namespace ProjectRestaurant.Entity.DTO.MessageDTO
 {
     public class MessageDTOUpdateRequest
     {
-        public int Id { get; set; }
-        public Guid Guid { get; set; }
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Subject { get; set; }
-        public string Content { get; set; }
+        public int Id { get; set; } = 0;
+        public Guid Guid { get; set; } = Guid.Empty;
+        public string Name { get; set; } = "string";
+        public string Email { get; set; } = "string";
+        public string Subject { get; set; } = "string";
+        public string Content { get; set; } = "string";
+        public bool IsActive { get; set; }
     }
 }

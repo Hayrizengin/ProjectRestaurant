@@ -8,9 +8,9 @@ namespace ProjectRestaurant.Entity.DTO.FoodDTO
 {
     public class FoodDTORequest
     {
-        public string Name { get; set; }
-        public decimal Price { get; set; }
-        public string ImageUrl { get; set; }
-        public int FoodCategoryId { get; set; }
+        public string Name { get; set; } = "string";
+        public decimal Price { get; set; } = 0;
+        public string ImageUrl { get; set; } = "string";
+        public int FoodCategoryId { get; set; } = 0;
     }
 }
