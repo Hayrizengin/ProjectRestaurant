@@ -16,7 +16,7 @@ namespace ProjectRestaurant.WebUI.Areas.AdminPanel.Controllers
             _apiService = apiService;
         }
 
-        [HttpPost("/Admin/SocialMedia")]
+        [HttpGet("/Admin/SocialMedia")]
         public async Task<IActionResult> Index()
         {
             ApiRequest<SocialMediaDTORequest> request = new()
@@ -33,7 +33,7 @@ namespace ProjectRestaurant.WebUI.Areas.AdminPanel.Controllers
         }
 
         [HttpPost("/Admin/AddSocialMedia")]
-        public async Task<IActionResult> AddSocialMedia(SocialMediaDTORequest socialMediaDTORequest)
+        public async Task<IActionResult> AddSocialMedia([FromBody]SocialMediaDTORequest socialMediaDTORequest)
         {
             ApiRequest<SocialMediaDTORequest> request = new()
             {

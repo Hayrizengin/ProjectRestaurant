@@ -8,11 +8,11 @@ namespace ProjectRestaurant.Entity.DTO.FoodDTO
 {
     public class FoodDTOUpdateRequest
     {
-        public int Id { get; set; }
-        public Guid Guid { get; set; }
-        public string Name { get; set; }
-        public decimal Price { get; set; }
-        public string ImageUrl { get; set; }
-        public int FoodCategoryId { get; set; }
+        public int Id { get; set; } = 0;
+        public Guid Guid { get; set; } = Guid.Empty;
+        public string Name { get; set; } = "string";
+        public decimal Price { get; set; } = 0;
+        public string? ImageUrl { get; set; } 
+        public int FoodCategoryId { get; set; } = 0;
     }
 }

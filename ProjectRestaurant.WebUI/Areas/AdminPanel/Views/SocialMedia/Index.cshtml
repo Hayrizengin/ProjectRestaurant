@@ -1,0 +1,333 @@
+﻿@using ProjectRestaurant.Entity.DTO.SocialMediaDTO
+@model List<SocialMediaDTOResponse>
+@{
+	ViewData["Title"] = "Index";
+	Layout = "~/Areas/AdminPanel/Views/Shared/_Layout.cshtml";
+}
+
+<main>
+	<div class="pagetitle d-flex justify-content-between">
+		<nav>
+			<h1>Sosyal Medya</h1>
+			<div>
+				<ol class="breadcrumb">
+					<li class="breadcrumb-item"><a href="/Admin/Anasayfa">Anasayfa</a></li>
+					<li class="breadcrumb-item active"><a href="/Admin/SocialMedia">Sosyal Medya</a></li>
+				</ol>
+			</div>
+		</nav>
+		<!-- Aktif olmayanları getir butonu -->
+		@* 		<div>
+			<ul class="list-group">
+				<li class="list-group-item">
+					Aktif olmayanları göster
+					<label class="switch ">
+						<input type="checkbox" class="success">
+						<span class="slider round"></span>
+					</label>
+				</li>
+			</ul>
+		</div> *@
+		<div>
+			<button type="button" id="addSocialMedia" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#NewSocialMedia">
+				Yeni Ekle
+			</button>
+		</div>
+	</div>
+</main>
+
+<div class="card">
+	<div class="card-body">
+		<!-- table start -->
+		<div class="row mb-2">
+			<div class="col-4">
+				<select class="form-control" id="items-per-page">
+					<option value="5">Her sayfada 5 sosyal medya göster.</option>
+					<option selected value="10">Her sayfada 10 sosyal medya göster.</option>
+					<option value="25">Her sayfada 25 sosyal medya göster.</option>
+					<option value="50">Her sayfada 50 sosyal medya göster.</option>
+				</select>
+			</div>
+			<div class="col-8"> <input type="text" id="my-table-search-input" class="form-control" placeholder="Ara..." autocomplete="off" /></div>
+		</div>
+		<table id="my-table" class="table  table-striped table-borderless shadow">
+			<!-- thead start -->
+			<thead>
+				<tr class="text-center fs-6 border-bottom">
+					<th style="width: 10px; text-align:start;">Resim</th>
+					<th style="text-align:start;">Sosyal Medya Linki</th>
+					<th style="text-align:start;"></th>
+					<th style="text-align:start;"></th>
+				</tr>
+			</thead>
+			<!-- thead end -->
+			<!-- tbody start -->
+			<tbody>
+				@{
+					int count = 0;
+				}
+				@{
+					if (Model != null && Model.Any())
+					{
+						@foreach (var socialMedia in Model)
+						{
+							count++;
+							<tr class="border-bottom">
+								<td class="align-content-center"><img class="card-img-top" style="max-width:100px" src="data:image/jpeg;base64,@socialMedia.Icon" alt="@socialMedia.Guid"></td>
+								<td class="align-content-center">@socialMedia.Url</td>
+								<td class="align-content-center">
+									<button id="btnUpdateFood" type="button"
+											onclick='openSocialMediaModal("@socialMedia.Id","@socialMedia.Guid","@socialMedia.Icon","@socialMedia.Url")' class="btn btn-success btn-sm">
+										Güncelle
+									</button>
+								</td>
+								<td class="align-content-center"><input name="Id" hidden="hidden" value="@socialMedia.Id" /><input name="Guid" hidden="hidden" value="@socialMedia.Guid" /><button id="deleteSocialMedia" data-id="@socialMedia.Guid" type="submit" class="btn btn-danger">Sil</button></td>
+
+							</tr>
+						}
+					}
+					else
+					{
+						<tr id="not-found" class="border-bottom"><td class="text-danger text-center fs-5" colspan="6">Eklenmiş sosyal medya yok.</td></tr>
+					}
+				}
+			</tbody>
+			<!-- tbody end -->
+			<!-- tfoot start -->
+			<tfoot>
+				<tr>
+					<td class="text-start border-0" colspan="2">Toplam <span id="total-entity" class="badge bg-primary custom-fs-14">@count</span> Yemek</td>
+					<td class="text-end border-0" colspan="4">
+						<nav class="d-flex justify-content-end">
+							<ul class="pagination fw-bold">
+								<li class="page-item">
+									<button id="first-page" class="page-link text-black">
+										<span aria-hidden="true">&laquo;</span>
+									</button>
+								</li>
+								<li>
+									<button id="prev-page" class="page-link text-black">
+										<span aria-hidden="true">&lsaquo;</span>
+									</button>
+								</li>
+								<li class="page-item active"><button class="page-link page-number text-white fw-bold">1</button></li>
+								<li>
+									<button id="next-page" class="page-link text-black">
+										<span aria-hidden="true">&rsaquo;</span>
+									</button>
+								</li>
+								<li class="page-item">
+									<button id="last-page" class="page-link text-black">
+										<span aria-hidden="true">&raquo;</span>
+									</button>
+								</li>
+							</ul>
+						</nav>
+					</td>
+				</tr>
+			</tfoot>
+			<!-- tfoot end -->
+		</table>
+		<!-- table end -->
+	</div>
+
+
+</div>
+<!-- Ekleme Modalı -->
+<div id="NewSocialMedia" class="modal">
+	<div class="modal-content">
+		<h2>Sosyal Medya Ekle</h2>
+		<form id="addSocialMediaForm">
+			<label>Icon:</label>
+			<input type="text" id="addIcon" required>
+
+			<label>URL:</label>
+			<input type="text" id="addUrl" required>
+
+			<button type="submit">Ekle</button>
+		</form>
+	</div>
+</div>
+<script>
+		$(document).ready(function () {
+		var ascending = true;
+		var itemsPerPage = 10;
+		var currentPage = 1;
+		var items = $("#my-table tbody tr");
+		var totalItems = items.length;
+		var totalPages = Math.ceil(totalItems / itemsPerPage);
+		var colSpanCount = $('#my-table tbody tr:first td').length;
+		var notFoundMessage = `<tr id="not-found" class="border-bottom"><td class="text-danger text-center fs-5" colspan="${colSpanCount}">Üzgünüz, aradığınız veri bulunamadı.</td></tr>`;
+		showPage(1);
+
+		$("#prev-page").click(function () {
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth'
+			});
+			if (currentPage > 1) {
+				currentPage--;
+				showPage(currentPage);
+			}
+		});
+
+		$("#first-page").click(function () {
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth'
+			});
+			currentPage = 1;
+			showPage(currentPage);
+		});
+
+		$("#next-page").click(function () {
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth'
+			});
+			if (currentPage < totalPages) {
+				currentPage++;
+				showPage(currentPage);
+			}
+		});
+
+		$("#last-page").click(function () {
+			window.scrollTo({
+				top: 0,
+				behavior: 'smooth'
+			});
+			currentPage = totalPages;
+			showPage(currentPage);
+		});
+
+		$('#my-table-search-input').keyup(function () {
+			$('#not-found').remove();
+			var searchText = $(this).val().toLowerCase();
+			var visibleRows = $('#my-table tbody tr').filter(function () {
+				var rowText = $(this).text().toLowerCase();
+				return rowText.indexOf(searchText) !== -1;
+			});
+			$('#my-table tbody tr').hide();
+			if (visibleRows.length > 0) {
+				visibleRows.show();
+				console.log(visibleRows.length);
+				$('#total-entity').text(visibleRows.length);
+			} else {
+				$('#total-entity').text(0);
+				$('#my-table tbody').append(notFoundMessage);
+			}
+			items = visibleRows;
+			totalItems = items.length;
+			totalPages = Math.ceil(totalItems / itemsPerPage);
+			if (totalPages == 0) {
+				totalPages = 1
+			}
+			showPage(1);
+			updateButtons();
+		});
+
+		$('#items-per-page').on('change', function () {
+			var selectedValue = $(this).val();
+			itemsPerPage = selectedValue;
+			totalPages = Math.ceil(totalItems / itemsPerPage);
+			if (totalPages == 0) {
+				totalPages = 1
+			}
+			showPage(1);
+			updateButtons();
+		});
+
+		function showPage(page) {
+			$(".page-number").text(currentPage + "/" + totalPages);
+			items.hide();
+			items.slice((page - 1) * itemsPerPage, page * itemsPerPage).show();
+			updateButtons();
+		}
+
+		function updateButtons() {
+			$("#first-page").toggle(currentPage > 1);
+			$("#prev-page").toggle(currentPage > 1);
+			$("#next-page").toggle(currentPage < totalPages);
+			$("#last-page").toggle(currentPage < totalPages);
+		}
+
+
+	});
+
+	// ekleme - güncelleme - silme - ajax istekleri
+		$(document).ready(function () {
+		// Sosyal medya ekleme işlemi
+		$("#addSocialMediaForm").submit(function (e) {
+			e.preventDefault();
+
+			var requestData = {
+				Icon: $("#addIcon").val(),
+				Url: $("#addUrl").val()
+			};
+
+			$.ajax({
+				url: "/Admin/AddSocialMedia",
+				type: "POST",
+				contentType: "application/json",
+				data: JSON.stringify(requestData),
+				success: function (response) {
+					alert("Sosyal medya eklendi!");
+					location.reload(); // Sayfayı yenile
+				},
+				error: function (xhr) {
+					alert("Ekleme başarısız: " + xhr.responseText);
+				}
+			});
+		});
+
+		// Sosyal medya güncelleme işlemi
+		$("#updateSocialMediaForm").submit(function (e) {
+			e.preventDefault();
+
+			var requestData = {
+				Id: $("#updateId").val(),
+				Guid: $("#updateGuid").val(),
+				Icon: $("#updateIcon").val(),
+				Url: $("#updateUrl").val()
+			};
+
+			$.ajax({
+				url: "/Admin/UpdateSocialMedia",
+				type: "POST",
+				contentType: "application/json",
+				data: JSON.stringify(requestData),
+				success: function (response) {
+					alert("Sosyal medya güncellendi!");
+					location.reload();
+				},
+				error: function (xhr) {
+					alert("Güncelleme başarısız: " + xhr.responseText);
+				}
+			});
+		});
+
+		// Sosyal medya silme işlemi
+		$(".deleteSocialMedia").click(function () {
+			var socialMediaId = $(this).data("id");
+
+			if (!confirm("Bu sosyal medya hesabını silmek istediğinizden emin misiniz?")) {
+				return;
+			}
+
+			$.ajax({
+				url: "/Admin/DeleteSocialMedia",
+				type: "POST",
+				contentType: "application/json",
+				data: JSON.stringify({ Id: socialMediaId }),
+				success: function (response) {
+					alert("Sosyal medya silindi!");
+					location.reload();
+				},
+				error: function (xhr) {
+					alert("Silme işlemi başarısız: " + xhr.responseText);
+				}
+			});
+		});
+	});
+
+</script>

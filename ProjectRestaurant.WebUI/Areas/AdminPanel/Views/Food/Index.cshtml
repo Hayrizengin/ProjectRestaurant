@@ -78,7 +78,7 @@
                         <td class="align-content-center">@food.Price</td>
                         <td class="align-content-center">
                             <button id="btnUpdateFood" type="button"
-                                    onclick='openFoodDetailModal("@food.Id","@food.Guid","@food.Name","@food.FoodCategoryId","@food.Price","@food.ImageUrl")' class="btn btn-success btn-sm">
+                                    onclick='openFoodDetailModal("@food.Id","@food.Guid","@food.Name","@food.Price","@food.FoodCategoryId","@food.ImageUrl")' class="btn btn-success btn-sm">
                                 Güncelle
                             </button>
                         </td>
@@ -90,62 +90,6 @@
 
                     </tr>
 
-
-                    @using (Html.BeginForm("UpdateFood", "Food", FormMethod.Post, new { id = "updateFoodForm", enctype = "multipart/form-data" }))
-                    {
-                        <div class="modal fade" id="FoodDetail" tabindex="-1" style="display: none;" aria-hidden="true">
-                            <div class="modal-dialog">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Güncelle</h5>
-                                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                    </div>
-                                    <input name="Id" for="updateFoodId" hidden="hidden" value="@food.Id" />
-                                    <input name="Guid" for="updateFoodGuid" hidden="hidden" value="@food.Guid" />
-                                    <div class="modal-body">
-                                        <div class="row mb-3">
-                                            <label for="updateFoodTitle" class="col-md-4 col-lg-3 col-form-label">Başlık</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="Name" type="text" class="form-control" id="updateFoodTitle">
-                                            </div>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="updateFoodPrice" class="col-md-4 col-lg-3 col-form-label">Fiyat</label>
-                                            <div class="col-md-8 col-lg-9">
-                                                <input name="Price" type="number" class="form-control" id="updateFoodPrice">
-                                            </div>
-                                        </div>
-
-                                        <div class="form-group">
-                                            <label for="updateFoodCategoryId">Kategorisi</label>
-                                            <select name="FoodCategoryId" class="custom-select rounded-0" id="updateFoodCategoryId">
-                                                <option value=""> Kategori Seçiniz...</option>
-                                                @{
-                                                    for (int i = 0; i < Model.FoodCategories.Count; i++)
-                                                    {
-                                                        <option value="@Model.FoodCategories[i].Id" selected="@food.FoodCategoryName">@Model.FoodCategories[i].Name</option>
-
-                                                    }
-                                                }
-
-
-                                            </select>
-                                        </div>
-
-                                        <div class="row mb-3">
-                                            <label for="updateFoodImage">Fotoğraf</label>
-                                            <input name="ImageUrl" style=" height: 43px;" type="file" class="form-control" rows="5" id="updateFoodImage" />
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
-                                        <button type="submit" class="btn btn-primary">Ekle</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    }
                 }
             </tbody>
             <!-- tbody end -->
@@ -196,45 +140,110 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Yeni ekle</h5>
+                    <h5 class="modal-title">Yeni Ekle</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="row mb-3">
-                        <label for="Title_Add" class="col-md-4 col-lg-3 col-form-label">Başlık</label>
-                        <div class="col-md-8 col-lg-9">
+                    <!-- Başlık -->
+                    <div class="row mb-3 align-items-center">
+                        <label for="Name_Add" class="col-sm-3 col-form-label text-end">Başlık</label>
+                        <div class="col-sm-9">
                             <input name="Name" type="text" class="form-control" id="Name_Add">
                         </div>
                     </div>
 
-                    <div class="row mb-3">
-                        <label for="Title_Add" class="col-md-4 col-lg-3 col-form-label">Fiyat</label>
-                        <div class="col-md-8 col-lg-9">
-                            <input name="Price" type="number" class="form-control" id="Name_Add">
+                    <!-- Fiyat -->
+                    <div class="row mb-3 align-items-center">
+                        <label for="Price_Add" class="col-sm-3 col-form-label text-end">Fiyat</label>
+                        <div class="col-sm-9">
+                            <input name="Price" type="number" class="form-control" id="Price_Add">
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="ddlFoodCategory_Add">Kategorisi</label>
-                        <select name="FoodCategoryId" class="custom-select rounded-0" id="ddlFoodCategory_Add">
-                            <option value=""> Kategori Seçiniz...</option>
-                            @{
-                                for (int i = 0; i < Model.FoodCategories.Count; i++)
+                    <!-- Kategori -->
+                    <div class="row mb-3 align-items-center">
+                        <label for="ddlFoodCategory_Add" class="col-sm-3 col-form-label text-end">Kategorisi</label>
+                        <div class="col-sm-9">
+                            <select name="FoodCategoryId" class="form-control custom-select rounded-0" id="ddlFoodCategory_Add">
+                                <option value="">Kategori Seçiniz...</option>
+                                @foreach (var category in Model.FoodCategories)
                                 {
-                                    <option value="@Model.FoodCategories[i].Id">@Model.FoodCategories[i].Name</option>
-
+                                    <option value="@category.Id">@category.Name</option>
                                 }
-                            }
-
-
-                        </select>
+                            </select>
+                        </div>
                     </div>
 
-                    <div class="row mb-3">
-                        <label for="ImageUrl_Add">Fotoğraf</label>
-                        <input name="ImageUrl" style=" height: 43px;" type="file" class="form-control" rows="5" id="ImageUrl_Add" />
+                    <!-- Fotoğraf -->
+                    <div class="row mb-3 align-items-center">
+                        <label for="ImageUrl_Add" class="col-sm-3 col-form-label text-end">Fotoğraf</label>
+                        <div class="col-sm-9">
+                            <input name="ImageUrl" type="file" class="form-control form-control-sm" id="ImageUrl_Add">
+                        </div>
                     </div>
                 </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
+                    <button type="submit" class="btn btn-primary">Ekle</button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@using (Html.BeginForm("UpdateFood", "Food", FormMethod.Post, new { id = "updateFoodForm", enctype = "multipart/form-data" }))
+{
+    <div class="modal fade" id="FoodDetail" tabindex="-1" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Güncelle</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <input name="Id" id="updateFoodId" type="hidden" />
+                <input name="Guid" id="updateFoodGuid" type="hidden" />
+
+                <div class="modal-body">
+                    <!-- Başlık -->
+                    <div class="row mb-3 align-items-center">
+                        <label for="updateFoodTitle" class="col-sm-3 col-form-label text-end">Başlık</label>
+                        <div class="col-sm-9">
+                            <input name="Name" type="text" class="form-control" id="updateFoodTitle">
+                        </div>
+                    </div>
+
+                    <!-- Fiyat -->
+                    <div class="row mb-3 align-items-center">
+                        <label for="updateFoodPrice" class="col-sm-3 col-form-label text-end">Fiyat</label>
+                        <div class="col-sm-9">
+                            <input name="Price" type="text" class="form-control" id="updateFoodPrice">
+                        </div>
+                    </div>
+
+                    <!-- Kategori -->
+                    <div class="row mb-3 align-items-center">
+                        <label for="updateFoodCategoryId" class="col-sm-3 col-form-label text-end">Kategorisi</label>
+                        <div class="col-sm-9">
+                            <select name="FoodCategoryId" class="form-control custom-select rounded-0" id="updateFoodCategoryId">
+                                <option value="">Kategori Seçiniz...</option>
+                                @foreach (var category in Model.FoodCategories)
+                                {
+                                    <option value="@category.Id">@category.Name</option>
+                                }
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Fotoğraf -->
+                    <div class="row mb-3 align-items-center">
+                        <label for="updateFoodImage" class="col-sm-3 col-form-label text-end">Fotoğraf</label>
+                        <div class="col-sm-9">
+                            <input name="ImageUrl" type="file" class="form-control form-control-sm" id="updateFoodImage" />
+                        </div>
+                    </div>
+                </div>
+
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Kapat</button>
                     <button type="submit" class="btn btn-primary">Ekle</button>
@@ -253,7 +262,7 @@
         $("#updateFoodGuid").val(guid);
         $("#updateFoodTitle").val(name);
         $("#updateFoodPrice").val(price);
-        $("#updateFoodCategoryId").val(foodCategoryId);
+        $("#updateFoodCategoryId").val(parseInt(foodCategoryId)).trigger("change");
         $("#updateFoodImage").val(imageUrl);
     }
     $(document).ready(function () {

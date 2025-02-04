@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProjectRestaurant.Entity.DTO.AboutDTO;
 using ProjectRestaurant.Entity.DTO.FoodCategoryDTO;
 using ProjectRestaurant.Entity.DTO.FoodDTO;
 using ProjectRestaurant.WebUI.Areas.AdminPanel.Models;
@@ -49,8 +50,22 @@ namespace ProjectRestaurant.WebUI.Areas.AdminPanel.Controllers
         }
 
         [HttpPost("/Food/AddFood")]
-        public async Task<IActionResult> AddFood(FoodDTORequest foodDTORequest)
+        public async Task<IActionResult> AddFood(FoodDTORequest foodDTORequest , IFormFile ImageUrl)
         {
+            //Fotoğrafı base64 şekline çevirme
+            string base64String = null;
+
+            if (ImageUrl != null && ImageUrl.Length > 0)
+            {
+                using (var memoryStream = new MemoryStream())
+                {
+                    await ImageUrl.CopyToAsync(memoryStream);
+                    byte[] fileBytes = memoryStream.ToArray();
+                    base64String = Convert.ToBase64String(fileBytes);
+                }
+                foodDTORequest.ImageUrl = base64String;
+            }
+
             ApiRequest<FoodDTORequest> request = new()
             {
                 Body = foodDTORequest,
@@ -74,17 +89,31 @@ namespace ProjectRestaurant.WebUI.Areas.AdminPanel.Controllers
         }
 
         [HttpPost("/Food/UpdateFood")]
-        public async Task<IActionResult> UpdateFood(FoodDTORequest foodDTORequest)
+        public async Task<IActionResult> UpdateFood(FoodDTOUpdateRequest foodDTOUpdateRequest , IFormFile ImageUrl)
         {
-            ApiRequest<FoodDTORequest> request = new()
+            //Fotoğrafı base64 şekline çevirme
+            string base64String = null;
+
+            if (ImageUrl != null && ImageUrl.Length > 0)
             {
-                Body = foodDTORequest,
+                using (var memoryStream = new MemoryStream())
+                {
+                    await ImageUrl.CopyToAsync(memoryStream);
+                    byte[] fileBytes = memoryStream.ToArray();
+                    base64String = Convert.ToBase64String(fileBytes);
+                }
+                foodDTOUpdateRequest.ImageUrl = base64String;
+            }
+
+            ApiRequest<FoodDTOUpdateRequest> request = new()
+            {
+                Body = foodDTOUpdateRequest,
                 URL = "/api/Food/UpdateFood",
                 Method = HttpMethod.Post,
                 //Token = SessionManager.loginDTOResponse.Token
             };
 
-            var response = await _apiService.SendRequestBoolAsync<FoodDTORequest>(request);
+            var response = await _apiService.SendRequestBoolAsync<FoodDTOUpdateRequest>(request);
 
             if (response.StatusCode != HttpStatusCode.OK)
             {
